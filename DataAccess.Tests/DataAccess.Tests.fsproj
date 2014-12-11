@@ -41,6 +41,18 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.fsproj">
+      <Name>DataAccess</Name>
+      <Project>{1047be2d-24cf-45c0-812c-8740d54dce99}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.fsproj">
+      <Name>Domain</Name>
+      <Project>{e6042abd-7c0f-4725-8297-04bd31497368}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>

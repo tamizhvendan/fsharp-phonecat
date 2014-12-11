@@ -41,6 +41,18 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.fsproj">
+      <Name>Domain</Name>
+      <Project>{e6042abd-7c0f-4725-8297-04bd31497368}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Web\Web.fsproj">
+      <Name>Web</Name>
+      <Project>{91629efd-80bb-44dc-9337-2a8b1ffe1cc4}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
