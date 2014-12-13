@@ -7,11 +7,17 @@ open System.Web.Http
 open System.Web.Mvc
 open System.Web.Routing
 open System.Web.Optimization
+open System.Web.Http.Dispatcher
+open Web.Controllers
+open System.Web.Http.Controllers
 
 type BundleConfig() =
     static member RegisterBundles (bundles:BundleCollection) =
         bundles.Add(ScriptBundle("~/bundles/jquery")
             .Include([|"~/Scripts/jquery-{version}.js"|]))
+
+        bundles.Add(ScriptBundle("~/bundles/knockout")
+            .Include([|"~/Scripts/knockout-3.2.0.js"|]))
 
         bundles.Add(ScriptBundle("~/bundles/modernizr")
             .Include([|"~/Scripts/modernizr-*"|]))
@@ -35,6 +41,15 @@ type HttpRoute = {
     controller : string
     id : RouteParameter }
 
+type CompositionRoot() =
+    interface IHttpControllerActivator with
+        member this.Create(request, controllerDescriptor, controllerType) =
+            if controllerType = typeof<PromotionsController> then
+                let promotionsController = new PromotionsController(PhoneCat.DataAccess.Promotions.getPromotions)
+                promotionsController :> IHttpController            
+            else
+                raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))
+
 type Global() =
     inherit System.Web.HttpApplication() 
 
@@ -52,6 +67,7 @@ type Global() =
         config.Formatters.JsonFormatter.SerializerSettings.ContractResolver <- Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
 
         // Additional Web API settings
+        config.Services.Replace(typeof<IHttpControllerActivator>, CompositionRoot())
 
     static member RegisterFilters(filters: GlobalFilterCollection) =
         filters.Add(new HandleErrorAttribute())

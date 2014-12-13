@@ -9,8 +9,10 @@ body {
 }
 
 .slide-image {
-    width: 100%;
+    margin-left: 200px;
+    height: 700px;
 }
+
 
 .carousel-holder {
     margin-bottom: 30px;
@@ -19,6 +21,12 @@ body {
 .carousel-control,
 .item {
     border-radius: 4px;
+}
+
+.carousel-caption {
+    color: #d17581;
+    font-size: 32px;
+    height: 130px;
 }
 
 .caption {
