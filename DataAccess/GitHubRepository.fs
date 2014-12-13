@@ -1,6 +1,5 @@
 ﻿namespace PhoneCat.DataAccess
 
-module GitHubRepository =
-
+module GitHubRepository = 
     let phoneIndexes = PhoneIndexTypeProvider.GetSamples()
 
