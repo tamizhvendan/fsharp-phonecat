@@ -10,6 +10,7 @@ open System.Web.Optimization
 open System.Web.Http.Dispatcher
 open Web.Controllers
 open System.Web.Http.Controllers
+open PhoneCat.DataAccess
 
 type BundleConfig() =
     static member RegisterBundles (bundles:BundleCollection) =
@@ -45,7 +46,7 @@ type CompositionRoot() =
     interface IHttpControllerActivator with
         member this.Create(request, controllerDescriptor, controllerType) =
             if controllerType = typeof<PromotionsController> then
-                let promotionsController = new PromotionsController(PhoneCat.DataAccess.Promotions.getPromotions)
+                let promotionsController = new PromotionsController(PhoneCat.DataAccess.Promotions.getPromotions, GitHubRepository.phoneIndexes)
                 promotionsController :> IHttpController            
             else
                 raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))
