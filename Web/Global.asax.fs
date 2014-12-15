@@ -46,7 +46,7 @@ type CompositionRoot() =
     interface IHttpControllerActivator with
         member this.Create(request, controllerDescriptor, controllerType) =
             if controllerType = typeof<PromotionsController> then
-                let promotionsController = new PromotionsController(PhoneCat.DataAccess.Promotions.getPromotions, GitHubRepository.phoneIndexes)
+                let promotionsController = new PromotionsController(PhoneCat.Domain.Promotions.getPromotions, GitHubRepository.phoneIndexes)
                 promotionsController :> IHttpController            
             else
                 raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))
