@@ -6,7 +6,7 @@ open PhoneCat.Domain
 [<RoutePrefix("api/phones")>]
 type PhonesController
     (
-        getTopSellingPhones : seq<PhoneTypeProvider.Root> -> seq<TopSellingPhone>,
+        getTopSellingPhones : seq<PhoneTypeProvider.Root> -> seq<Phone>,
         phones : seq<PhoneTypeProvider.Root>              
     ) = 
     inherit ApiController()

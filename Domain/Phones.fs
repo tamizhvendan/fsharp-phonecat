@@ -1,12 +1,7 @@
 ﻿namespace PhoneCat.Domain
 
 [<AutoOpen>]
-module Phones = 
-    type TopSellingPhone = 
-        { Id : string
-          Name : string
-          Description : string
-          ImageUrl : string }  
+module Phones =    
     
     let getTopSellingPhones (phonesSold : seq<PhoneSold>) (phones : seq<PhoneTypeProvider.Root>) = 
         phonesSold
@@ -14,11 +9,7 @@ module Phones =
         |> Seq.sortBy (fun x -> -(fst x))
         |> Seq.take 4
         |> Seq.map snd
-        |> Seq.map (fun x -> 
-               { Id = x.Id
-                 Name = x.Name
-                 Description = x.Description
-                 ImageUrl = x.Images.[0] })
+        |> Seq.map Phone.ToPhone
     
     let getManufacturers (phones : seq<PhoneTypeProvider.Root>) = 
         let manufactureName = Company.ToCompany >> Company.ToString
@@ -27,4 +18,4 @@ module Phones =
         |> Seq.groupBy fst
         |> Seq.map (fun (key, values) -> 
                { Name = key
-                 Phones = (values |> Seq.map snd) })
+                 Phones = (values |> Seq.map snd |> Seq.map Phone.ToPhone) })

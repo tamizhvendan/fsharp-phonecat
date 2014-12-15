@@ -130,6 +130,7 @@
     <Compile Include="Controllers\HomeController.fs" />
     <Compile Include="Controllers\PromotionsController.fs" />
     <Compile Include="Controllers\PhonesController.fs" />
+    <Compile Include="Controllers\ManufacturersController.fs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
