@@ -11,6 +11,7 @@ open System.Web.Http.Dispatcher
 open Web.Controllers
 open System.Web.Http.Controllers
 open PhoneCat.DataAccess
+open PhoneCat.Web.Infrastructure
 
 type BundleConfig() =
     static member RegisterBundles (bundles:BundleCollection) =
@@ -42,14 +43,7 @@ type HttpRoute = {
     controller : string
     id : RouteParameter }
 
-type CompositionRoot() =
-    interface IHttpControllerActivator with
-        member this.Create(request, controllerDescriptor, controllerType) =
-            if controllerType = typeof<PromotionsController> then
-                let promotionsController = new PromotionsController(PhoneCat.Domain.Promotions.getPromotions, GitHubRepository.phoneIndexes)
-                promotionsController :> IHttpController            
-            else
-                raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))
+
 
 type Global() =
     inherit System.Web.HttpApplication() 

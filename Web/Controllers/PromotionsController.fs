@@ -2,12 +2,11 @@
 
 open System.Web.Http
 open PhoneCat.Domain
-open PhoneCat.DataAccess
 
 [<RoutePrefix("api/promotions")>]
 type PromotionsController
     (
-        getPromotions : seq<PhoneIndexTypeProvider.Root> -> seq<PromotionItem>,
+        getPromotions : seq<PhoneIndexTypeProvider.Root> -> seq<PromotionPhone>,
         phoneIndexes: seq<PhoneIndexTypeProvider.Root>
     ) =
     inherit ApiController()
@@ -15,4 +14,3 @@ type PromotionsController
     [<Route("")>]
     member this.Get () = 
         getPromotions phoneIndexes
-

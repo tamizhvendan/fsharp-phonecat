@@ -53,6 +53,8 @@
     <Compile Include="Promotions.fs" />
     <Content Include="packages.config" />
     <Content Include="app.config" />
+    <Compile Include="Purchases.fs" />
+    <Compile Include="Phones.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">

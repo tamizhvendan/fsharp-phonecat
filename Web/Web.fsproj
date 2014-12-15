@@ -129,12 +129,14 @@
     <None Include="fonts\glyphicons-halflings-regular.eot" />
     <Compile Include="Controllers\HomeController.fs" />
     <Compile Include="Controllers\PromotionsController.fs" />
+    <Compile Include="Controllers\PhonesController.fs" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config" />
+    <Compile Include="Infrastructure.fs" />
     <Content Include="Global.asax" />
     <Compile Include="Global.asax.fs">
       <DependentUpon>Global.asax</DependentUpon>

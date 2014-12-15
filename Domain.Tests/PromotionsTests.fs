@@ -14,7 +14,7 @@ module PromotionsTests =
             yield new PhoneIndexTypeProvider.Root(3, "id3", "imageUrl3", "name3", "snippet3")
             yield new PhoneIndexTypeProvider.Root(4, "id4", "imageUrl4", "name4", "snippet4")
         }
-        let expectedPromotionItems : seq<PromotionItem> = seq {
+        let expectedPromotionItems : seq<PromotionPhone> = seq {
             yield { Id = "id0"; ImageUrl = "imageUrl0"; Name = "name0" }
             yield { Id = "id1"; ImageUrl = "imageUrl1"; Name = "name1" }
             yield { Id = "id2"; ImageUrl = "imageUrl2"; Name = "name2" }

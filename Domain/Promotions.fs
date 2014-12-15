@@ -2,7 +2,7 @@
 [<AutoOpen>]
 module Promotions = 
 
-    type PromotionItem = {
+    type PromotionPhone = {
         Id : string
         ImageUrl : string
         Name : string
