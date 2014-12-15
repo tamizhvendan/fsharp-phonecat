@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="TypeProviders.fs" />
     <Compile Include="Promotions.fs" />
+    <Compile Include="Company.fs" />
     <Content Include="packages.config" />
     <Content Include="app.config" />
     <Compile Include="Purchases.fs" />
