@@ -12,9 +12,8 @@ module Phones =
         |> Seq.map Phone.ToPhone
     
     let getManufacturers (phones : seq<PhoneTypeProvider.Root>) = 
-        let manufactureName = Company.ToCompany >> Company.ToString
         phones
-        |> Seq.map (fun p -> (manufactureName p.Name), p)
+        |> Seq.map (fun p -> ManufacturerName.ToManufacturerName p.Name, p)
         |> Seq.groupBy fst
         |> Seq.map (fun (key, values) -> 
                { Name = key

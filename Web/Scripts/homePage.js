@@ -14,6 +14,11 @@ function TopSellingPhoneViewModel(topSellingPhone) {
     this.description = ko.observable(topSellingPhone.description);
 }
 
+function ManufacturerViewModel(manufacturer) {
+    this.name = ko.observable(manufacturer.name);
+    this.manufactureUrl = ko.observable("manufacturer/" + manufacturer.name);
+}
+
 
 function HomePageViewModel() {
 
@@ -21,22 +26,30 @@ function HomePageViewModel() {
 
     self.promotionPhones = ko.observableArray([]);
     self.topSellingPhones = ko.observableArray([]);
+    self.manufacturers = ko.observableArray([]);
 
     $.getJSON("api/promotions", function (promotionPhones) {
-        var phones = $.map(promotionPhones, function (x, i) {
+        var promotionPhoneViewModels = $.map(promotionPhones, function (x, i) {
             if (i == 1)
                 return new PromotionPhoneViewModel(x, "item active");
             else
                 return new PromotionPhoneViewModel(x, "item");
         });
-        self.promotionPhones(phones);
+        self.promotionPhones(promotionPhoneViewModels);
     });
 
     $.getJSON("api/phones/topselling", function (topSellingPhones) {
-        var phones = $.map(topSellingPhones, function (x) {
+        var topSellingPhoneViewModels = $.map(topSellingPhones, function (x) {
             return new TopSellingPhoneViewModel(x);
         });
-        self.topSellingPhones(phones);
+        self.topSellingPhones(topSellingPhoneViewModels);
+    });
+
+    $.getJSON("api/manufacturers", function (manufacturers) {
+        var manufacturerViewModels = $.map(manufacturers, function (x) {
+            return new ManufacturerViewModel(x);
+        });
+        self.manufacturers(manufacturerViewModels);
     });
 }
 

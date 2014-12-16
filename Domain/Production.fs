@@ -1,9 +1,11 @@
 ﻿namespace PhoneCat.Domain
 
 [<AutoOpen>]
-module Company = 
-    type Company = 
-        Samsung | Motorola | Dell | LG | TMobile | Sanyo | Others
+module Production = 
+    
+    type ManufacturerName = 
+        Samsung | Motorola | Dell | LG | TMobile | Sanyo | Unknown
+        
         static member ToString company =
             match company with
             | Samsung -> "Samsung"
@@ -12,9 +14,9 @@ module Company =
             | LG -> "LG"
             | TMobile -> "TMobile"
             | Sanyo -> "Sanyo"
-            | Others -> "Others"
+            | Unknown -> "Unknown"
 
-        static member ToCompany (name : string) =
+        static member ToManufacturerName (name : string) =
             match name.ToLower() with
             | n when n.Contains("samsung") -> Samsung
             | n when n.Contains("motorola") -> Motorola
@@ -23,7 +25,7 @@ module Company =
             | n when n.Contains("t-mobile") -> TMobile
             | n when n.Contains("sanyo") -> Sanyo
             | n when n.Contains("nexus") -> Samsung
-            | _ -> Others
+            | _ -> Unknown
 
     type Phone = 
         { Id : string
@@ -34,6 +36,6 @@ module Company =
               { Id = phone.Id; Name = phone.Name; Description = phone.Description; ImageUrl = phone.Images.[0] }
 
     type Manufacturer = 
-        { Name : string
+        { Name : ManufacturerName
           Phones : seq<Phone> }
 

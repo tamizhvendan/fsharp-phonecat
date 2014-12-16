@@ -62,7 +62,9 @@ type Global() =
         config.Formatters.JsonFormatter.SerializerSettings.ContractResolver <- Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
 
         // Additional Web API settings
-        config.Services.Replace(typeof<IHttpControllerActivator>, CompositionRoot())
+        let phones = GitHubRepository.getPhones()
+        let phoneIndexes = GitHubRepository.getPhoneIndexes()
+        config.Services.Replace(typeof<IHttpControllerActivator>, CompositionRoot(phones, phoneIndexes))
 
     static member RegisterFilters(filters: GlobalFilterCollection) =
         filters.Add(new HandleErrorAttribute())

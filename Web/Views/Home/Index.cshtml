@@ -2,10 +2,8 @@
 
     <div class="col-md-3">
         <p class="lead">FSharp PhoneCat</p>
-        <div class="list-group">
-            <a href="#" class="list-group-item">Category 1</a>
-            <a href="#" class="list-group-item">Category 2</a>
-            <a href="#" class="list-group-item">Category 3</a>
+        <div class="list-group" data-bind="foreach : manufacturers">
+            <a data-bind="attr : { href : manufactureUrl}, text : name" class="list-group-item"></a>
         </div>
     </div>
 
