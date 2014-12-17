@@ -51,16 +51,11 @@
   <ItemGroup>
     <Compile Include="Production.fs" />
     <Compile Include="Promotions.fs" />
-    <Content Include="packages.config" />
     <Content Include="app.config" />
     <Compile Include="Purchases.fs" />
     <Compile Include="Phones.fs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Data">
-      <HintPath>..\packages\FSharp.Data.2.1.0\lib\net40\FSharp.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>

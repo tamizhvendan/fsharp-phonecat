@@ -51,6 +51,8 @@
   <ItemGroup>
     <Content Include="app.config" />
     <Content Include="packages.config" />
+    <Compile Include="TypeProvidersTests.fs" />
+    <Compile Include="GitHubRepositoryTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">

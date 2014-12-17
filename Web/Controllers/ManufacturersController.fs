@@ -12,12 +12,13 @@ type ManufacturerViewModel =
 [<RoutePrefix("api/manufacturers")>]
 type ManufacturersController
     (
-        getManufacturers : seq<Phone> -> seq<Manufacturer>,
+        getManufacturerNames : seq<Phone> -> seq<ManufacturerName>,
         phones : seq<Phone>              
     ) = 
     inherit ApiController()
 
     [<Route("")>]
     member this.Get () =
-        getManufacturers phones
-        |> Seq.map (fun p -> {Name = ManufacturerName.ToString p.Name})
+        getManufacturerNames phones
+        |> Seq.distinct
+        |> Seq.map (fun name -> {Name = ManufacturerName.ToString name})

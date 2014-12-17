@@ -19,7 +19,5 @@ module GitHubRepository =
 
     let getPhoneIndexes () = phoneIndexes
 
-    let getPhone id = phones.Item(id)
-
     let getPhones () = phones |> Seq.map (fun p -> p.Value)
         

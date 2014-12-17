@@ -1,4 +1,5 @@
-﻿namespace PhoneCat.PromotionsTests
+﻿namespace PhoneCat.Domain.Promotions.Tests
+
 open NUnit.Framework
 open FsUnit
 open PhoneCat.Domain

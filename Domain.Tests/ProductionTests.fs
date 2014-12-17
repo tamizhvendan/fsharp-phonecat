@@ -1,4 +1,4 @@
-﻿namespace PhoneCat.PromotionsTests
+﻿namespace PhoneCat.Domain.Production.Tests
 
 open NUnit.Framework
 open FsUnit
@@ -16,7 +16,7 @@ module ProductionTests =
 
     let ToManufactureNameTestCases : Object [] =
         let samsung : Object [] = [| "Samsung"; ManufacturerName.Samsung|]
-        let samsung' : Object [] = [| "samsung"; ManufacturerName.Samsung|]
+        let samsung' : Object [] = [| "nexus"; ManufacturerName.Samsung|]
         let tMobile : Object [] = [| "t-mobIle"; ManufacturerName.TMobile|]
         let lg : Object [] = [| "LG SmartPhone"; ManufacturerName.LG|]
         let motorola : Object [] = [| "All New Motorola"; ManufacturerName.Motorola|]

@@ -36,9 +36,7 @@ module Production =
         { Id : string
           Name : string
           ImageUrl : string
-          Age : int }        
+          Age : int }      
 
-    type Manufacturer = 
-        { Name : ManufacturerName
-          Phones : seq<Phone> }
+    
 

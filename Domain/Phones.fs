@@ -10,10 +10,6 @@ module Phones =
         |> Seq.take phoneCount
         |> Seq.map snd
 
-    let getManufacturers (phones : seq<Phone>) = 
+    let getManufacturerNames (phones : seq<Phone>) = 
         phones
-        |> Seq.map (fun p -> ManufacturerName.ToManufacturerName p.Name, p)
-        |> Seq.groupBy fst
-        |> Seq.map (fun (key, values) -> 
-               { Name = key
-                 Phones = (values |> Seq.map snd) })
+        |> Seq.map (fun p -> ManufacturerName.ToManufacturerName p.Name)

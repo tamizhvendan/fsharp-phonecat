@@ -1,5 +1,6 @@
-﻿namespace PhoneCat.Domain
+﻿namespace PhoneCat.DataAccess
 open FSharp.Data
+open PhoneCat.Domain
 
 [<AutoOpen>]
 module TypeProviders =

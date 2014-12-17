@@ -32,7 +32,7 @@ module Infrastructure =
                     phonesController :> IHttpController           
             
                 else if controllerType = typeof<ManufacturersController> then
-                    let manufacturersController = new ManufacturersController(getManufacturers, phones')
+                    let manufacturersController = new ManufacturersController(getManufacturerNames, phones')
                     manufacturersController :> IHttpController 
                 else
                     raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))    
