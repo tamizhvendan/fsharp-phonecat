@@ -9,7 +9,7 @@ module Promotions =
     }
 
 
-    let getPromotions (phoneIndexes : seq<PhoneIndexTypeProvider.Root>) = 
+    let getPromotions (phoneIndexes : seq<PhoneIndex>) = 
         phoneIndexes 
         |> Seq.filter (fun phone -> phone.Age < 3) 
         |> Seq.map (fun phone -> {Id = phone.Id; Name = phone.Name; ImageUrl = phone.ImageUrl})

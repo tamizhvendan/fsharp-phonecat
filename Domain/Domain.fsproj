@@ -49,9 +49,8 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="TypeProviders.fs" />
-    <Compile Include="Promotions.fs" />
     <Compile Include="Production.fs" />
+    <Compile Include="Promotions.fs" />
     <Content Include="packages.config" />
     <Content Include="app.config" />
     <Compile Include="Purchases.fs" />

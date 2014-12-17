@@ -6,11 +6,11 @@ open PhoneCat.Domain
 [<RoutePrefix("api/phones")>]
 type PhonesController
     (
-        getTopSellingPhones : seq<PhoneTypeProvider.Root> -> seq<Phone>,
-        phones : seq<PhoneTypeProvider.Root>              
+        getTopSellingPhones : int -> seq<Phone> -> seq<Phone>,
+        phones : seq<Phone>              
     ) = 
     inherit ApiController()
 
     [<Route("topselling")>]
     member this.GetTopSelling () =
-        getTopSellingPhones phones
+        getTopSellingPhones 3 phones

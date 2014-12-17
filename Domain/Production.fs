@@ -6,13 +6,12 @@ module Production =
     type ManufacturerName = 
         Samsung | Motorola | Dell | LG | TMobile | Sanyo | Unknown
         
-        static member ToString company =
-            match company with
+        static member ToString = function           
             | Samsung -> "Samsung"
             | Motorola -> "Motorola"
             | Dell -> "Dell"
             | LG -> "LG"
-            | TMobile -> "TMobile"
+            | TMobile -> "T-Mobile"
             | Sanyo -> "Sanyo"
             | Unknown -> "Unknown"
 
@@ -32,8 +31,12 @@ module Production =
           Name : string
           Description : string
           ImageUrl : string }
-        static member ToPhone (phone : PhoneTypeProvider.Root) =
-              { Id = phone.Id; Name = phone.Name; Description = phone.Description; ImageUrl = phone.Images.[0] }
+                    
+    type PhoneIndex =
+        { Id : string
+          Name : string
+          ImageUrl : string
+          Age : int }        
 
     type Manufacturer = 
         { Name : ManufacturerName

@@ -90,3 +90,9 @@ module TypeProviders =
     """
     
     type PhoneTypeProvider = JsonProvider<samplePhoneJson>
+    
+    let ToPhone (phone : PhoneTypeProvider.Root) =
+        { Id = phone.Id; Name = phone.Name; Description = phone.Description; ImageUrl = phone.Images.[0] }
+        
+    let ToPhoneIndex (phoneIndex : PhoneIndexTypeProvider.Root) =
+        { Id = phoneIndex.Id; Name = phoneIndex.Name; Age = phoneIndex.Age; ImageUrl = phoneIndex.ImageUrl }

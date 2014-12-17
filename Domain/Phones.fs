@@ -3,18 +3,17 @@
 [<AutoOpen>]
 module Phones =    
     
-    let getTopSellingPhones (phonesSold : seq<PhoneSold>) (phones : seq<PhoneTypeProvider.Root>) = 
+    let getTopSellingPhones (phonesSold : seq<PhoneSold>) phoneCount (phones : seq<Phone>) = 
         phonesSold
         |> Seq.map (fun p -> p.Quantity, (phones |> Seq.find (fun p' -> p'.Id = p.Id)))
         |> Seq.sortBy (fun x -> -(fst x))
-        |> Seq.take 4
+        |> Seq.take phoneCount
         |> Seq.map snd
-        |> Seq.map Phone.ToPhone
-    
-    let getManufacturers (phones : seq<PhoneTypeProvider.Root>) = 
+
+    let getManufacturers (phones : seq<Phone>) = 
         phones
         |> Seq.map (fun p -> ManufacturerName.ToManufacturerName p.Name, p)
         |> Seq.groupBy fst
         |> Seq.map (fun (key, values) -> 
                { Name = key
-                 Phones = (values |> Seq.map snd |> Seq.map Phone.ToPhone) })
+                 Phones = (values |> Seq.map snd) })

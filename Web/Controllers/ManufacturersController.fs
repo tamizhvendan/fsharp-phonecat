@@ -12,8 +12,8 @@ type ManufacturerViewModel =
 [<RoutePrefix("api/manufacturers")>]
 type ManufacturersController
     (
-        getManufacturers : seq<PhoneTypeProvider.Root> -> seq<Manufacturer>,
-        phones : seq<PhoneTypeProvider.Root>              
+        getManufacturers : seq<Phone> -> seq<Manufacturer>,
+        phones : seq<Phone>              
     ) = 
     inherit ApiController()
 

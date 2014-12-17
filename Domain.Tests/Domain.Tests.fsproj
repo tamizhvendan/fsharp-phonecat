@@ -52,6 +52,7 @@
     <Compile Include="PromotionsTests.fs" />
     <Content Include="app.config" />
     <Content Include="packages.config" />
+    <Compile Include="ProductionTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">

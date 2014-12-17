@@ -6,8 +6,8 @@ open PhoneCat.Domain
 [<RoutePrefix("api/promotions")>]
 type PromotionsController
     (
-        getPromotions : seq<PhoneIndexTypeProvider.Root> -> seq<PromotionPhone>,
-        phoneIndexes: seq<PhoneIndexTypeProvider.Root>
+        getPromotions : seq<PhoneIndex> -> seq<PromotionPhone>,
+        phoneIndexes: seq<PhoneIndex>
     ) =
     inherit ApiController()
 
