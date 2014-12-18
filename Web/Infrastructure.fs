@@ -22,7 +22,7 @@ module Infrastructure =
                 let phoneIndexes' = phoneIndexes |> Seq.map TypeProviders.ToPhoneIndex
 
                 if controllerType = typeof<PromotionsController> then
-                    let promotionsController = new PromotionsController(PhoneCat.Domain.Promotions.getPromotions, phoneIndexes')
+                    let promotionsController = new PromotionsController(getPromotions, phoneIndexes')
                     promotionsController :> IHttpController
             
                 else if controllerType = typeof<PhonesController> then
