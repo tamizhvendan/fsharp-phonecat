@@ -140,11 +140,13 @@
     <Content Include="Web.config" />
     <Compile Include="Infrastructure.fs" />
     <Content Include="Global.asax" />
+    <Compile Include="MvcInfrastructure.fs" />
     <Compile Include="Global.asax.fs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Content Include="packages.config" />
     <Content Include="readme.txt" />
+    <Content Include="Views\Phone\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">

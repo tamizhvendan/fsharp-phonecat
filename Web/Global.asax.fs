@@ -8,9 +8,10 @@ open System.Web.Mvc
 open System.Web.Routing
 open System.Web.Optimization
 open System.Web.Http.Dispatcher
-open Web.Controllers
+open PhoneCat.Web.Controllers
 open System.Web.Http.Controllers
 open PhoneCat.DataAccess
+open PhoneCat.Web
 open PhoneCat.Web.Infrastructure
 
 type BundleConfig() =
@@ -48,7 +49,7 @@ type HttpRoute = {
 type Global() =
     inherit System.Web.HttpApplication() 
 
-    static member RegisterWebApi(config: HttpConfiguration) =
+    static member RegisterWebApi(config: HttpConfiguration, phones) =
         // Configure routing
         config.MapHttpAttributeRoutes()
         config.Routes.MapHttpRoute(
@@ -61,8 +62,7 @@ type Global() =
         config.Formatters.XmlFormatter.UseXmlSerializer <- true
         config.Formatters.JsonFormatter.SerializerSettings.ContractResolver <- Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver()
 
-        // Additional Web API settings
-        let phones = GitHubRepository.getPhones()
+        // Additional Web API settings        
         let phoneIndexes = GitHubRepository.getPhoneIndexes()
         config.Services.Replace(typeof<IHttpControllerActivator>, CompositionRoot(phones, phoneIndexes))
 
@@ -78,8 +78,10 @@ type Global() =
         ) |> ignore
 
     member x.Application_Start() =
-        AreaRegistration.RegisterAllAreas()
-        GlobalConfiguration.Configure(Action<_> Global.RegisterWebApi)
-        Global.RegisterFilters(GlobalFilters.Filters)
-        Global.RegisterRoutes(RouteTable.Routes)
-        BundleConfig.RegisterBundles BundleTable.Bundles
+      let phones = GitHubRepository.getPhones()
+      AreaRegistration.RegisterAllAreas()
+      GlobalConfiguration.Configure(new Action<HttpConfiguration>(fun config -> Global.RegisterWebApi(config, phones)))
+      Global.RegisterFilters(GlobalFilters.Filters)
+      Global.RegisterRoutes(RouteTable.Routes)
+      ControllerBuilder.Current.SetControllerFactory(MvcInfrastructure.CompositionRoot(phones))
+      BundleConfig.RegisterBundles BundleTable.Bundles

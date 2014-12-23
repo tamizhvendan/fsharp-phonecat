@@ -7,9 +7,11 @@ module Measures =
     [<Measure>] type GB
 
     let private toUOM (measureString : string) stringToReplace (uom : float<_>) = 
-        measureString.Replace(stringToReplace, "")
-        |> float
-        |> ((*) uom)  
+        let value = if measureString = "" then 
+                      0. 
+                    else 
+                      measureString.Replace(stringToReplace, "") |> float
+        value |> ((*) uom)  
 
     let toInch (inchStr : string) = toUOM inchStr "inches" 1.0<inch>
     let toGram (weightStr : string) = toUOM weightStr "grams" 1.0<g>

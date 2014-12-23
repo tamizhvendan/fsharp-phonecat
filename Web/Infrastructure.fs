@@ -3,7 +3,7 @@
 open System
 open System.Web.Http.Dispatcher
 open System.Web.Http.Controllers
-open Web.Controllers
+open PhoneCat.Web.Controllers
 open PhoneCat.DataAccess
 open PhoneCat.Domain
 

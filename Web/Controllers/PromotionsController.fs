@@ -1,4 +1,4 @@
-﻿namespace Web.Controllers
+﻿namespace PhoneCat.Web.Controllers
 
 open System.Web.Http
 open PhoneCat.Domain

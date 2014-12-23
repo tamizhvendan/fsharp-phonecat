@@ -42,15 +42,16 @@ module TypeProvidersTests =
         
         let phone = ToCatalogPhone phoneTypeProviderRoot
 
+        phone.Name |> should equal phoneTypeProviderRoot.Name
+        phone.Description |> should equal phoneTypeProviderRoot.Description
+        phone.Id |> should equal phoneTypeProviderRoot.Id
         phone.Android.OS |> should equal phoneTypeProviderRoot.Android.Os
         phone.Android.UI |> should equal phoneTypeProviderRoot.Android.Ui
         phone.Camera.Features |> should equal phoneTypeProviderRoot.Camera.Features
-        phone.Camera.Primary |> should equal phoneTypeProviderRoot.Camera.Primary
-        phone.Description |> should equal phoneTypeProviderRoot.Description
+        phone.Camera.Primary |> should equal phoneTypeProviderRoot.Camera.Primary        
         phone.Display.ScreenResolution |> should equal phoneTypeProviderRoot.Display.ScreenResolution
         phone.Display.ScreenSize |> should equal 3.5<inch>
-        phone.Display.TouchScreen |> should equal phoneTypeProviderRoot.Display.TouchScreen
-        phone.Name |> should equal phoneTypeProviderRoot.Name
+        phone.Display.TouchScreen |> should equal phoneTypeProviderRoot.Display.TouchScreen        
         phone.Weight |> should equal 105.0<g>
         phone.Storage.Flash |> should equal 130.<MB>
         phone.Storage.Ram |> should equal 256.<MB>

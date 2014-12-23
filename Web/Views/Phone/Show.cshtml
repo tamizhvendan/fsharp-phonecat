@@ -1,0 +1,112 @@
+﻿@model PhoneCat.Web.Controllers.PhoneViewModel
+@{
+  var imageHostUrl = "http://angular.github.io/angular-phonecat/step-12/app/";
+}
+
+<div class="row">
+
+  <div class="col-md-4">
+    <p class="lead">@Model.Name</p>
+    <div class="thumbnail">
+      <p>@Model.Description</p>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="row carousel-holder">
+      <div class="col-md-12">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            @for (int i = 0; i < Model.Images.Count(); i++)
+            {
+              if (i == 0)
+              {
+                <li data-target="#carousel-example-generic" data-slide-to="@i" class="active"></li>
+              }
+              else
+              {
+                <li data-target="#carousel-example-generic" data-slide-to="@i"></li>
+              }
+            }
+          </ol>
+          <div class="carousel-inner" data-bind="foreach: promotionPhones">
+            @for (int i = 0; i < Model.Images.Count(); i++)
+            {
+              var imageUrl = imageHostUrl + Model.Images.ElementAt(i);
+              if (i == 0)
+              {
+                <div class="item active">
+                  <img class="slide-image" src="@imageUrl" />
+                </div>
+              }
+              else
+              {
+                <div class="item">
+                  <img class="slide-image" src="@imageUrl"/>
+                </div>
+              }
+            }
+          </div>
+          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <h4>
+          Android
+        </h4>
+        <p>
+          OS : @Model.Os
+        </p><p>
+          UI : @Model.Ui
+        </p>
+      </div>
+      <div class="col-md-3">
+        <h4>
+          Storage
+        </h4>
+        <p>Flash : @Model.Flash</p>
+        <p>Ram : @Model.Ram</p>
+
+      </div>
+      <div class="col-md-6">
+
+        <h4>
+          Weight & Screen
+        </h4>
+        <p>Weight : @Model.Weight</p>
+        <p>ScreenResolution : @Model.ScreenResolution</p>
+        <p>ScreenSize : @Model.ScreenSize</p>
+        <p>TouchScreen : @Model.TouchScreen</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <h4>
+          Camera
+        </h4>
+        <p>
+          Primary : @Model.Primary
+        </p>
+        <strong>Features</strong>
+        <ul>
+          @foreach (var feature in Model.Features)
+          {
+          <li>@feature</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

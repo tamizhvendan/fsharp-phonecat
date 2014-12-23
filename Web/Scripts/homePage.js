@@ -1,5 +1,5 @@
 ﻿var imageHostUrl = "http://angular.github.io/angular-phonecat/step-12/app/";
-var phoneBaseUrl = "phone/view/";
+var phoneBaseUrl = "phone/show/";
 
 function PromotionPhoneViewModel(promotionPhone, active) {
     this.imageUrl = ko.observable(imageHostUrl + promotionPhone.imageUrl);

@@ -26,6 +26,7 @@ module Catalog =
     }
 
     type Phone = {
+        Id : string
         Name : string
         Description : string
         Android : Android
@@ -33,5 +34,6 @@ module Catalog =
         Display : Display
         Weight : float<g>
         Storage : Storage
+        Images : seq<string>
     }
 

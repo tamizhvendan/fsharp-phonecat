@@ -3,7 +3,7 @@
 open NUnit.Framework
 open FsUnit
 open PhoneCat.Domain
-open Web.Controllers
+open PhoneCat.Web.Controllers
 
 module PromotionsControllerTests =
     
