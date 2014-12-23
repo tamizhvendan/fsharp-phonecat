@@ -1,15 +1,16 @@
 ﻿var imageHostUrl = "http://angular.github.io/angular-phonecat/step-12/app/";
+var phoneBaseUrl = "phone/view/";
 
 function PromotionPhoneViewModel(promotionPhone, active) {
     this.imageUrl = ko.observable(imageHostUrl + promotionPhone.imageUrl);
-    this.phoneUrl = ko.observable("phones/" + promotionPhone.id);
+    this.phoneUrl = ko.observable(phoneBaseUrl + promotionPhone.id);
     this.name = ko.observable(promotionPhone.name);
     this.active = ko.observable(active);
 }
 
 function TopSellingPhoneViewModel(topSellingPhone) {
     this.imageUrl = ko.observable(imageHostUrl + topSellingPhone.imageUrl);
-    this.phoneUrl = ko.observable("phones/" + topSellingPhone.id);
+    this.phoneUrl = ko.observable(phoneBaseUrl + topSellingPhone.id);
     this.name = ko.observable(topSellingPhone.name);
     this.description = ko.observable(topSellingPhone.description);
 }

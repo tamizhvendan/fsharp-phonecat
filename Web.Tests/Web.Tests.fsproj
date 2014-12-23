@@ -50,8 +50,8 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Content Include="app.config" />
-    <Compile Include="Controllers/ManufacturersControllerTests.fs" />
     <Content Include="packages.config" />
+    <Compile Include="Controllers\ManufacturersControllerTests.fs" />
     <Compile Include="Controllers\PromotionsControllerTests.fs" />
     <Compile Include="Controllers\PhonesControllerTests.fs" />
   </ItemGroup>

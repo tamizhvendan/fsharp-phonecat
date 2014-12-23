@@ -19,6 +19,7 @@ module GitHubRepositoryTests =
     
     [<Test>]
     [<Category("LongRunning")>]
+    [<Ignore>]
     let `` getPhoneIndexes returns all the phone indexes from the angular github repository ``() = 
         let response = Http.RequestString(phoneIndexUrl, silentHttpErrors = true, headers = requestHeaders)
         let expectedPhoneIndexes = PhoneIndexTypeProvider.Parse(response)
@@ -35,6 +36,7 @@ module GitHubRepositoryTests =
 
     [<Test>]
     [<Category("LongRunning")>]
+    [<Ignore>]
     let `` getPhones returns all the phones from the angular github repository ``() = 
         let response = Http.RequestString(phoneIndexUrl, silentHttpErrors = true, headers = requestHeaders)
         let phoneIds = PhoneIndexTypeProvider.Parse(response) |> Seq.map (fun p -> p.Id)

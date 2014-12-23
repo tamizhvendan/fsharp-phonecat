@@ -54,6 +54,8 @@
     <Content Include="app.config" />
     <Compile Include="Purchases.fs" />
     <Compile Include="Phones.fs" />
+    <Compile Include="Measures.fs" />
+    <Compile Include="Catalog.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

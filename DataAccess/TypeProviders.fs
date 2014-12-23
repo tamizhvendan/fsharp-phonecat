@@ -1,10 +1,12 @@
 ﻿namespace PhoneCat.DataAccess
+
 open FSharp.Data
 open PhoneCat.Domain
+open PhoneCat.Domain.Catalog
+open PhoneCat.Domain.Measures
 
 [<AutoOpen>]
-module TypeProviders =
-
+module TypeProviders = 
     [<Literal>]
     let private samplePhoneIndexes = """
     [{
@@ -23,14 +25,14 @@ module TypeProviders =
     """
     
     type PhoneIndexTypeProvider = JsonProvider<samplePhoneIndexes>
-
+    
     [<Literal>]
     let private samplePhoneJson = """
         {
         "additionalFeatures": "Trackball", 
         "android": {
             "os": "Android 2.2", 
-            "ui": ""
+            "ui": "MOTOBLUR"
         }, 
         "availability": [
             "Sprint"
@@ -92,8 +94,34 @@ module TypeProviders =
     
     type PhoneTypeProvider = JsonProvider<samplePhoneJson>
     
-    let ToPhone (phone : PhoneTypeProvider.Root) =
-        { Id = phone.Id; Name = phone.Name; Description = phone.Description; ImageUrl = phone.Images.[0] }
+    let ToPhone(phone : PhoneTypeProvider.Root) = 
+        { Id = phone.Id
+          Name = phone.Name
+          Description = phone.Description
+          ImageUrl = phone.Images.[0] }
+    
+    let ToPhoneIndex(phoneIndex : PhoneIndexTypeProvider.Root) = 
+        { Id = phoneIndex.Id
+          Name = phoneIndex.Name
+          Age = phoneIndex.Age
+          ImageUrl = phoneIndex.ImageUrl }
+    
+    let ToCatalogPhone(phone : PhoneTypeProvider.Root) = 
+        let android = { OS = phone.Android.Os; UI = phone.Android.Ui }
         
-    let ToPhoneIndex (phoneIndex : PhoneIndexTypeProvider.Root) =
-        { Id = phoneIndex.Id; Name = phoneIndex.Name; Age = phoneIndex.Age; ImageUrl = phoneIndex.ImageUrl }
+        let camera = { Features = phone.Camera.Features; Primary = phone.Camera.Primary }        
+        
+        let display = 
+            { ScreenResolution = phone.Display.ScreenResolution
+              ScreenSize = toInch phone.Display.ScreenSize
+              TouchScreen = phone.Display.TouchScreen }
+
+        let storage = { Flash = toMB phone.Storage.Flash; Ram = toMB phone.Storage.Ram}
+
+        { Name = phone.Name
+          Description = phone.Description
+          Android = android
+          Camera = camera
+          Display = display
+          Weight = toGram phone.SizeAndWeight.Weight
+          Storage = storage }

@@ -54,6 +54,7 @@
     <Content Include="packages.config" />
     <Compile Include="ProductionTests.fs" />
     <Compile Include="PhonesTests.fs" />
+    <Compile Include="MeasureTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FsUnit.NUnit">
