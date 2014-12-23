@@ -4,11 +4,10 @@
 open System.Web.Http
 open PhoneCat.Domain
 
-type ManufacturerViewModel =
+type ManufacturersViewModel =
     {
         Name : string
     }
-
 
 [<RoutePrefix("api/manufacturers")>]
 type ManufacturersController
@@ -20,6 +19,6 @@ type ManufacturersController
 
     [<Route("")>]
     member this.Get () =
-        getManufacturerNames phones
-        |> Seq.distinct
-        |> Seq.map (fun name -> {Name = ManufacturerName.ToString name})
+      getManufacturerNames phones
+      |> Seq.distinct
+      |> Seq.map (fun name -> {Name = ManufacturerName.ToString name})

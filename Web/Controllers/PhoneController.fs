@@ -24,9 +24,9 @@ type PhoneViewModel =
 
   with static member ToPhoneViewModel(phone : Phone) =
         let roundToDigits (value:float) = String.Format("{0:0.00}", value)
+        let concatWithSpace str2 str1 = str1 + " " + str2
         let uomToString (measureValue: float<_>) measureName =
-          let value = measureValue |> float |> roundToDigits  
-          value + " " + measureName
+          measureValue |> float |> roundToDigits |> concatWithSpace measureName
         
         { 
           Name = phone.Name

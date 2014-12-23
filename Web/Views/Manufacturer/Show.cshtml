@@ -1,0 +1,31 @@
+﻿@model PhoneCat.Web.Controllers.ManufacturerViewModel
+@{
+  var imageHostUrl = "http://angular.github.io/angular-phonecat/step-12/app/";
+}
+<div class="row">
+
+  <div class="col-md-4">
+    <p class="lead">@Model.Name</p>
+  </div>
+
+  <div class="col-md-12">
+    
+      @foreach (var phone in Model.Phones)
+      {
+        var imageUrl = imageHostUrl + phone.ImageUrl;
+        <div class="col-md-4">
+          <div class="thumbnail">
+            <img src="@imageUrl" />
+            <div class="caption">
+              <h4>
+                <a href="#">@phone.Name</a>
+              </h4>
+              <p>@phone.Description</p>
+            </div>
+          </div>
+        </div>
+      }
+    
+  </div>
+
+</div>

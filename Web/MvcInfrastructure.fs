@@ -11,11 +11,15 @@ module MvcInfrastructure =
     inherit DefaultControllerFactory() with
       override this.GetControllerInstance(requestContext, controllerType) = 
         if controllerType = typeof<HomeController> then 
-            let homeController = new HomeController()
-            homeController :> IController
+          let homeController = new HomeController()
+          homeController :> IController
         else if controllerType = typeof<PhoneController> then
-            let phones' = phones |> Seq.map TypeProviders.ToCatalogPhone
-            let phoneController = new PhoneController(phones')
-            phoneController :> IController
+          let phones' = phones |> Seq.map TypeProviders.ToCatalogPhone
+          let phoneController = new PhoneController(phones')
+          phoneController :> IController
+        else if controllerType = typeof<ManufacturerController> then
+          let getPhonesByManufactuerName = phones |> Seq.map TypeProviders.ToPhone |> Phones.getPhonesOfManufacturer
+          let manufacturerController = new ManufacturerController(getPhonesByManufactuerName)
+          manufacturerController :> IController
         else
-            raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))
+          raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))
