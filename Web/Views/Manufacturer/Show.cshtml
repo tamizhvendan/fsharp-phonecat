@@ -18,7 +18,7 @@
             <img src="@imageUrl" />
             <div class="caption">
               <h4>
-                <a href="#">@phone.Name</a>
+                <a href="@Url.Action("Show", "Phone", new RouteValueDictionary{ {"id", phone.Id}})">@phone.Name</a>
               </h4>
               <p>@phone.Description</p>
             </div>
