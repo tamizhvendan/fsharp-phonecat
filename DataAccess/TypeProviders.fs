@@ -109,7 +109,9 @@ module TypeProviders =
   let ToCatalogPhone(phone : PhoneTypeProvider.Root) = 
     let android = { OS = phone.Android.Os; UI = phone.Android.Ui }
         
-    let camera = { Features = phone.Camera.Features; Primary = phone.Camera.Primary }        
+    let camera = { 
+        Features = phone.Camera.Features 
+        Primary = phone.Camera.Primary }        
         
     let display = 
       { ScreenResolution = phone.Display.ScreenResolution
