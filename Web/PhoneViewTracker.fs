@@ -1,6 +1,7 @@
 ﻿namespace PhoneCat.Web
 open System.Web
 open System.Reactive.Subjects
+open PhoneCat.Domain
 
 module PhoneViewTracker =
   
@@ -12,5 +13,5 @@ module PhoneViewTracker =
     
   let observePhonesViewed (session : HttpSessionStateBase) lastViewedPhoneId =
     let phoneIdsVisited = lastViewedPhoneId :: (recentlyViewedPhoneIds session)
-    session.[sessionVariableName] <- phoneIdsVisited
-    
+    RecommendationAgent.Post phoneIdsVisited
+    session.[sessionVariableName] <- phoneIdsVisited 

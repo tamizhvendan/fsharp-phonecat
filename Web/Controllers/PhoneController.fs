@@ -59,5 +59,7 @@ type PhoneController(phones : seq<Phone>) =
     this.View(phone)
 
   override this.Dispose disposing =
-    if disposing then subject.Dispose()
+    if disposing then 
+      subject.OnCompleted()
+      subject.Dispose()      
     base.Dispose disposing
