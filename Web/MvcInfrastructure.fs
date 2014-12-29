@@ -13,9 +13,11 @@ module MvcInfrastructure =
         if controllerType = typeof<HomeController> then 
           let homeController = new HomeController()
           homeController :> IController
-        else if controllerType = typeof<PhoneController> then
+        else if controllerType = typeof<PhoneController> then          
           let phones' = phones |> Seq.map TypeProviders.ToCatalogPhone
+          let observer = PhoneViewTracker.observePhonesViewed requestContext.HttpContext.Session
           let phoneController = new PhoneController(phones')
+          let subscription = phoneController.Subscribe observer          
           phoneController :> IController
         else if controllerType = typeof<ManufacturerController> then
           let getPhonesByManufactuerName = phones |> Seq.map TypeProviders.ToPhone |> Phones.getPhonesOfManufacturer

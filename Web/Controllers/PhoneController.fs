@@ -4,6 +4,7 @@ open System.Web
 open System.Web.Mvc
 open PhoneCat.Domain.Catalog
 open System
+open System.Reactive.Subjects
 
 type PhoneViewModel = 
   {
@@ -46,7 +47,17 @@ type PhoneViewModel =
 
 type PhoneController(phones : seq<Phone>) =
   inherit Controller()
+  
+  let subject = new Subject<string>()
+  
+  interface IObservable<string> with
+    member this.Subscribe observer = subject.Subscribe observer
+  
   member this.Show (id : string) = 
-    let phone = phones |> Seq.find (fun p -> p.Id = id) |> PhoneViewModel.ToPhoneViewModel 
+    let phone = phones |> Seq.find (fun p -> p.Id = id) |> PhoneViewModel.ToPhoneViewModel
+    subject.OnNext id 
     this.View(phone)
 
+  override this.Dispose disposing =
+    if disposing then subject.Dispose()
+    base.Dispose disposing
