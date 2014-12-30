@@ -28,7 +28,6 @@ module Hubs =
 
     interface IObserver<string> with
       member this.OnNext(recommendedPhoneId) = 
-        let user = this.Context
         let hubContext = GlobalHost.ConnectionManager.GetHubContext<RecommendationHub>()
         let phoneUrl = getUrl recommendedPhoneId httpContext
         let phone = getPhone recommendedPhoneId
