@@ -14,6 +14,9 @@ module Phones =
     phones
     |> Seq.map (fun p -> ManufacturerName.ToManufacturerName p.Name)
 
+  let getPhoneById (phones : seq<Phone>) phoneId =
+    phones |> Seq.find (fun p -> p.Id = phoneId)
+
   let getPhonesOfManufacturer (phones : seq<Phone>) (manufacturerName) =
     let phones' = 
       phones

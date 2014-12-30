@@ -1,64 +1,64 @@
 <div class="row">
 
-    <div class="col-md-3">
-        <p class="lead">FSharp PhoneCat</p>
-        <div class="list-group" data-bind="foreach : manufacturers">
-            <a data-bind="attr : { href : manufactureUrl}, text : name" class="list-group-item"></a>
+  <div class="col-md-3">
+    <p class="lead">FSharp PhoneCat</p>
+    <div class="list-group" data-bind="foreach : manufacturers">
+      <a data-bind="attr : { href : manufactureUrl}, text : name" class="list-group-item"></a>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+
+    <div class="row carousel-holder">
+
+      <div class="col-md-12">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner" data-bind="foreach: promotionPhones">
+            <div class="item" data-bind="attr: { class : active }">
+              <div class="carousel-caption">
+                <a data-bind="attr : { href : phoneUrl }, text: name"></a>
+              </div>
+              <img class="slide-image" data-bind="attr:  { src : imageUrl}" />
+            </div>
+          </div>
+          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </a>
         </div>
+      </div>
+
     </div>
 
-    <div class="col-md-9">
+    <div class="row" data-bind="foreach : topSellingPhones">
 
-        <div class="row carousel-holder">
-
-            <div class="col-md-12">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner" data-bind="foreach: promotionPhones">
-                        <div class="item" data-bind="attr: { class : active }">
-                            <div class="carousel-caption">
-                                <a data-bind="attr : { href : phoneUrl }, text: name"></a>
-                            </div>
-                            <img class="slide-image" data-bind="attr:  { src : imageUrl}" />
-                        </div>
-                    </div>
-                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </div>
-            </div>
-
+      <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="thumbnail">
+          <img data-bind="attr : { src : imageUrl, alt : name }" />
+          <div class="caption">
+            <h4>
+              <a data-bind="attr : { href : phoneUrl }, text : name"></a>
+            </h4>
+            <p data-bind="text : description"></p>
+          </div>
         </div>
-
-        <div class="row" data-bind="foreach : topSellingPhones">
-
-            <div class="col-sm-4 col-lg-4 col-md-4">
-                <div class="thumbnail">
-                    <img data-bind="attr : { src : imageUrl, alt : name }" />
-                    <div class="caption">
-                        <h4>
-                            <a data-bind="attr : { href : phoneUrl }, text : name"></a>
-                        </h4>
-                        <p data-bind="text : description"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      </div>
     </div>
-    
-    
+
+  </div>
+
+
 
 </div>
 
 
 @section scripts {
-    <script src="~/Scripts/homePage.js"></script>
+  <script src="~/Scripts/homePage.js"></script>
 }

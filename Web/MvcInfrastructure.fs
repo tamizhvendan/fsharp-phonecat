@@ -5,8 +5,10 @@ open PhoneCat.Domain
 open PhoneCat.Web.Controllers
 open System
 open System.Web.Mvc
+open Hubs
 
-module MvcInfrastructure =   
+module MvcInfrastructure =    
+
   type CompositionRoot(phones : seq<PhoneTypeProvider.Root>) =          
     inherit DefaultControllerFactory() with
       override this.GetControllerInstance(requestContext, controllerType) = 
@@ -25,3 +27,9 @@ module MvcInfrastructure =
           manufacturerController :> IController
         else
           raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))
+
+  let initializeRecommendation httpContext phones = 
+    let phones' = phones |> Seq.map TypeProviders.ToPhone
+    let getPhoneById = Phones.getPhoneById phones'
+    let recommendationHub = new RecommendationHub(httpContext, getPhoneById)
+    Recommendation.RecommendationPipe.Subscribe recommendationHub

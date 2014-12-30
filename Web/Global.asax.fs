@@ -13,6 +13,8 @@ open System.Web.Http.Controllers
 open PhoneCat.DataAccess
 open PhoneCat.Web
 open PhoneCat.Web.Infrastructure
+open PhoneCat.Web.Hubs
+open PhoneCat.Domain
 
 type BundleConfig() =
     static member RegisterBundles (bundles:BundleCollection) =
@@ -85,3 +87,5 @@ type Global() =
       Global.RegisterRoutes(RouteTable.Routes)
       ControllerBuilder.Current.SetControllerFactory(MvcInfrastructure.CompositionRoot(phones))
       BundleConfig.RegisterBundles BundleTable.Bundles
+      MvcInfrastructure.initializeRecommendation HttpContext.Current phones |> ignore
+      ()
