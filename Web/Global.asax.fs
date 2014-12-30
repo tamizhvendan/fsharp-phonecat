@@ -33,6 +33,9 @@ type BundleConfig() =
 
         bundles.Add(StyleBundle("~/Content/css")
             .Include("~/Content/bootstrap.css",
+                        "~/Content/font-awesome.css",
+                        "~/Content/buttons.css",
+                        "~/Content/animate.css",
                         "~/Content/site.css",
                         "~/Content/shop-homepage.css"))
 
