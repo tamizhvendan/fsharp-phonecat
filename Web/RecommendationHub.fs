@@ -10,8 +10,9 @@ open ImpromptuInterface.FSharp
 open System.Web.Security
 open System.Reflection
 open PhoneViewTracker
+open PhoneCat.DataAccess
 
-module Hubs =   
+module Hubs =     
 
   let private getUrl (phoneId : string) httpContext =
     let routeValueDictionary = new RouteValueDictionary()
@@ -39,6 +40,9 @@ module Hubs =
       "Recommendation initiated"
 
 
-  let notifyRecommendation (connectionId, recommendedPhoneId) =
+  let notifyRecommendation httpContext phones (connectionId, recommendedPhoneId) =
+    let phones' = phones |> Seq.map TypeProviders.ToPhone
+    let recommendedPhone = Phones.getPhoneById phones' recommendedPhoneId
+    let phoneUrl = getUrl recommendedPhoneId httpContext
     let hubContext = GlobalHost.ConnectionManager.GetHubContext<RecommendationHub>()
-    hubContext.Clients.Client(connectionId)?showRecommendation(recommendedPhoneId)
+    hubContext.Clients.Client(connectionId)?showRecommendation(recommendedPhone, phoneUrl) 

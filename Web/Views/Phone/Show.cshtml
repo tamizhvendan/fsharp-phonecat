@@ -65,8 +65,8 @@
         <p>
           OS : @Model.Os
         </p><p>
-          UI : @Model.Ui
-        </p>
+              UI : @Model.Ui
+            </p>
       </div>
       <div class="col-md-3">
         <h4>
@@ -99,10 +99,17 @@
         <ul>
           @foreach (var feature in Model.Features)
           {
-          <li>@feature</li>
+            <li>@feature</li>
           }
         </ul>
       </div>
     </div>
   </div>
 </div>
+
+@section scripts {
+  <script src="~/Scripts/jquery.signalR-2.1.2.js"></script>
+  <script src="~/signalr/hubs"></script>
+  <script src="~/Scripts/jquery.noty.packaged.min.js"></script>
+  <script src="~/Scripts/recommendation.js"></script>
+}
