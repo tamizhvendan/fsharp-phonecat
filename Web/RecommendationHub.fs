@@ -7,9 +7,12 @@ open System
 open PhoneCat.Domain
 open System.Dynamic
 open ImpromptuInterface.FSharp
+open System.Web.Security
+open System.Reflection
+open PhoneViewTracker
 
+module Hubs =   
 
-module Hubs = 
   let private getUrl (phoneId : string) httpContext =
     let routeValueDictionary = new RouteValueDictionary()
     routeValueDictionary.Add("controller", "Phone")
@@ -19,21 +22,23 @@ module Hubs =
     let virtualPathData = RouteTable.Routes.GetVirtualPath(requestContext, routeValueDictionary);
     virtualPathData.VirtualPath
 
-  type RecommendationHub
-    (
-      httpContext : HttpContext,
-      getPhone : string -> Phone
-    ) =
-    inherit Hub ()  
+  // http://stackoverflow.com/questions/2481037/how-do-you-get-anonymousid-from-cookie-aspxanonymous
+  let private decode encodedAnonymousId =
+    let decodeMethod = typeof<AnonymousIdentificationModule>.GetMethod("GetDecodedValue", BindingFlags.Static ||| BindingFlags.NonPublic)
+    let anonymousIdData = decodeMethod.Invoke(null, [| encodedAnonymousId |]);
+    let field = anonymousIdData.GetType().GetField("AnonymousId", BindingFlags.Instance ||| BindingFlags.NonPublic);
+    field.GetValue(anonymousIdData) :?> string
 
-    interface IObserver<string> with
-      member this.OnNext(recommendedPhoneId) = 
-        let hubContext = GlobalHost.ConnectionManager.GetHubContext<RecommendationHub>()
-        let phoneUrl = getUrl recommendedPhoneId httpContext
-        let phone = getPhone recommendedPhoneId
-        hubContext.Clients.All?showRecommendation(phone, phoneUrl)
-      member this.OnError(err) = ()
-      member this.OnCompleted() = ()
+  type RecommendationHub() =
+    inherit Hub ()
+    member this.GetRecommendation () =             
+      let encodedAnonymousId = this.Context.Request.Cookies.[".ASPXANONYMOUS"].Value
+      let anonymousId = decode encodedAnonymousId
+      let connectionId = this.Context.ConnectionId
+      PhoneViewTracker.StorageAgent.Post (GetRecommendation(anonymousId, connectionId))
+      "Recommendation initiated"
 
-  
 
+  let notifyRecommendation (connectionId, recommendedPhoneId) =
+    let hubContext = GlobalHost.ConnectionManager.GetHubContext<RecommendationHub>()
+    hubContext.Clients.Client(connectionId)?showRecommendation(recommendedPhoneId)

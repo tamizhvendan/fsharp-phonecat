@@ -33,6 +33,12 @@
     });
   }
 
-  $.connection.hub.start();
+  $.connection.hub.start().done(function() {
+    console.log("Hub started");
+    recommendationHub.server.getRecommendation().done(function(data) {
+      console.log("Notification");
+      console.log(data);
+    });
+  });
 
 })();

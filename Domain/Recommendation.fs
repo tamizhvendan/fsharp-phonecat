@@ -7,19 +7,19 @@ type Agent<'T> = MailboxProcessor<'T>
 [<AutoOpen>]
 module Recommendation =
 
-  let RecommendationPipe = new Subject<string>()
+  let RecommendationPipe = new Subject<string*string>()
 
-  let private suggestRecommendation = function
-    | ["motorola-xoom-with-wi-fi"; "motorola-xoom"] -> RecommendationPipe.OnNext "motorola-atrix-4g"
-    | ["dell-streak-7"; "dell-venue"] -> RecommendationPipe.OnNext "nexus-s"
-    | _ -> ()
+  let private suggestRecommendation connectionId visitedPhoneIds = 
+    match visitedPhoneIds with
+    | ["motorola-xoom-with-wi-fi"; "motorola-xoom"] -> RecommendationPipe.OnNext (connectionId,"motorola-atrix-4g")
+    | ["dell-streak-7"; "dell-venue"] -> RecommendationPipe.OnNext (connectionId,"nexus-s")
+    | _ -> RecommendationPipe.OnNext (connectionId,"motorola-xoom")
 
-  let private recommendationAgentFunc (inbox : Agent<List<string>>) =
+  let private recommendationAgentFunc (inbox : Agent<string*List<string>>) =
     let rec messageLoop () = async {
-      let! visitedPhoneIds = inbox.Receive()     
+      let! connectionId, visitedPhoneIds = inbox.Receive()     
       if (Seq.length visitedPhoneIds) >= 2 then
-        Thread.Sleep(3000)
-        suggestRecommendation (visitedPhoneIds |> Seq.take 2 |> Seq.toList)
+        suggestRecommendation connectionId (visitedPhoneIds |> Seq.take 2 |> Seq.toList)
       return! messageLoop()
     }
     messageLoop ()

@@ -90,5 +90,5 @@ type Global() =
       Global.RegisterRoutes(RouteTable.Routes)
       ControllerBuilder.Current.SetControllerFactory(MvcInfrastructure.CompositionRoot(phones))
       BundleConfig.RegisterBundles BundleTable.Bundles
-      MvcInfrastructure.initializeRecommendation HttpContext.Current phones |> ignore
+      Recommendation.RecommendationPipe.Subscribe (Hubs.notifyRecommendation) |> ignore
       ()
