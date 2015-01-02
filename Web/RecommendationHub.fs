@@ -11,6 +11,7 @@ open System.Web.Security
 open System.Reflection
 open PhoneViewTracker
 open PhoneCat.DataAccess
+open PhoneCat.Domain.UserNavigationHistory
 
 module Hubs =     
 
@@ -36,7 +37,7 @@ module Hubs =
       let encodedAnonymousId = this.Context.Request.Cookies.[".ASPXANONYMOUS"].Value
       let anonymousId = decode encodedAnonymousId
       let connectionId = this.Context.ConnectionId
-      PhoneViewTracker.StorageAgent.Post (GetRecommendation(anonymousId, connectionId))
+      StorageAgent.Post (GetRecommendation(anonymousId, connectionId))
       "Recommendation initiated"
 
 
