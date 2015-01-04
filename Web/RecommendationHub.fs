@@ -26,9 +26,13 @@ module Hubs =
 
   // http://stackoverflow.com/questions/2481037/how-do-you-get-anonymousid-from-cookie-aspxanonymous
   let private decode encodedAnonymousId =
-    let decodeMethod = typeof<AnonymousIdentificationModule>.GetMethod("GetDecodedValue", BindingFlags.Static ||| BindingFlags.NonPublic)
+    let decodeMethod = 
+      typeof<AnonymousIdentificationModule>
+        .GetMethod("GetDecodedValue", BindingFlags.Static ||| BindingFlags.NonPublic)
     let anonymousIdData = decodeMethod.Invoke(null, [| encodedAnonymousId |]);
-    let field = anonymousIdData.GetType().GetField("AnonymousId", BindingFlags.Instance ||| BindingFlags.NonPublic);
+    let field = 
+      anonymousIdData.GetType()
+        .GetField("AnonymousId", BindingFlags.Instance ||| BindingFlags.NonPublic);
     field.GetValue(anonymousIdData) :?> string
 
   type RecommendationHub() =
@@ -43,7 +47,10 @@ module Hubs =
 
   let notifyRecommendation httpContext phones (connectionId, recommendedPhoneId) =
     let phones' = phones |> Seq.map TypeProviders.ToPhone
-    let recommendedPhone = Phones.getPhoneById phones' recommendedPhoneId
-    let phoneUrl = getUrl recommendedPhoneId httpContext
-    let hubContext = GlobalHost.ConnectionManager.GetHubContext<RecommendationHub>()
-    hubContext.Clients.Client(connectionId)?showRecommendation(recommendedPhone, phoneUrl) 
+    match recommendedPhoneId with 
+    | Some phoneId ->
+      let recommendedPhone = Phones.getPhoneById phones' phoneId
+      let phoneUrl = getUrl phoneId httpContext
+      let hubContext = GlobalHost.ConnectionManager.GetHubContext<RecommendationHub>()
+      hubContext.Clients.Client(connectionId)?showRecommendation(recommendedPhone, phoneUrl) 
+    | None -> ()

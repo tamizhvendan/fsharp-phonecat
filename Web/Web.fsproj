@@ -157,7 +157,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Content Include="packages.config" />
-    <Content Include="readme.txt" />
     <Compile Include="Startup.fs" />
   </ItemGroup>
   <ItemGroup>

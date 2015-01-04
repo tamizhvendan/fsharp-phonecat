@@ -27,11 +27,4 @@ module UserNavigationHistory =
     }
     loop (new Dictionary<string, list<string>>())
 
-  let StorageAgent = Agent.Start(storageAgentFunc)  
-    
-  let observePhonesViewed (anonymousId : string) (phoneIdBeingVisited : string) =
-    StorageAgent.Post (SavePhoneVisit (anonymousId, phoneIdBeingVisited))
-  
-  
-
-  
+  let StorageAgent = Agent.Start(storageAgentFunc)
