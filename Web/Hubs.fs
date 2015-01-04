@@ -24,7 +24,7 @@ module Hubs =
     let virtualPathData = RouteTable.Routes.GetVirtualPath(requestContext, routeValueDictionary);
     virtualPathData.VirtualPath
 
-  // http://stackoverflow.com/questions/2481037/how-do-you-get-anonymousid-from-cookie-aspxanonymous
+  // copied from http://stackoverflow.com/questions/2481037/how-do-you-get-anonymousid-from-cookie-aspxanonymous
   let private decode encodedAnonymousId =
     let decodeMethod = 
       typeof<AnonymousIdentificationModule>
