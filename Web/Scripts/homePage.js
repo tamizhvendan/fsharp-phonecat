@@ -1,5 +1,6 @@
 ﻿var imageHostUrl = "http://angular.github.io/angular-phonecat/step-12/app/";
-var phoneBaseUrl = "phone/show/";
+var siteName = window.location.pathname;
+var phoneBaseUrl = siteName + "/phone/show/";
 
 function PromotionPhoneViewModel(promotionPhone, active) {
     this.imageUrl = ko.observable(imageHostUrl + promotionPhone.imageUrl);
@@ -29,7 +30,7 @@ function HomePageViewModel() {
     self.topSellingPhones = ko.observableArray([]);
     self.manufacturers = ko.observableArray([]);
 
-    $.getJSON("api/promotions", function (promotionPhones) {
+    $.getJSON(siteName + "/api/promotions", function (promotionPhones) {
         var promotionPhoneViewModels = $.map(promotionPhones, function (x, i) {
             if (i == 1)
                 return new PromotionPhoneViewModel(x, "item active");
@@ -39,14 +40,14 @@ function HomePageViewModel() {
         self.promotionPhones(promotionPhoneViewModels);
     });
 
-    $.getJSON("api/phones/topselling", function (topSellingPhones) {
+    $.getJSON(siteName + "/api/phones/topselling", function (topSellingPhones) {
         var topSellingPhoneViewModels = $.map(topSellingPhones, function (x) {
             return new TopSellingPhoneViewModel(x);
         });
         self.topSellingPhones(topSellingPhoneViewModels);
     });
 
-    $.getJSON("api/manufacturers", function (manufacturers) {
+    $.getJSON(siteName + "/api/manufacturers", function (manufacturers) {
         var manufacturerViewModels = $.map(manufacturers, function (x) {
             return new ManufacturerViewModel(x);
         });
