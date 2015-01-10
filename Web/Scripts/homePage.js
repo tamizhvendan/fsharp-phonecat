@@ -18,7 +18,7 @@ function TopSellingPhoneViewModel(topSellingPhone) {
 
 function ManufacturerViewModel(manufacturer) {
     this.name = ko.observable(manufacturer.name);
-    this.manufactureUrl = ko.observable("manufacturer/show/" + manufacturer.name);
+    this.manufactureUrl = ko.observable(siteName + "manufacturer/show/" + manufacturer.name);
 }
 
 

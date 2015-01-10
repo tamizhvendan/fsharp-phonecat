@@ -5,13 +5,13 @@
 open Fake
 open Fake.IISHelper
 
-RestorePackages()
-
 let buildDir = "./build"
 
 Target "Clean" (fun _ -> CleanDir buildDir)
 
 Target "Build" (fun _ ->
+
+  RestorePackages()
 
   !! "./PhoneCat.sln"
     |> MSBuildRelease buildDir "Build"
