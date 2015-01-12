@@ -1,9 +1,9 @@
 #r "tools/FAKE/tools/FakeLib.dll"
 #r "tools/FAKE/tools/Fake.IIS.dll"
-#r "packages/Microsoft.Web.Administration/lib/net20/Microsoft.Web.Administration.dll"
 
 open Fake
 open Fake.IISHelper
+open Fake.AssemblyInfoFile
 
 let buildDir = "./build"
 
@@ -24,16 +24,16 @@ Target "Test" (fun _ ->
     |> NUnit (fun p -> {p with ToolPath = "./tools/NUnit.Runners/tools" })
 )
 
-
-let siteName = "fsharp"
-let appPool = "fsharp.appPool"
-let port = ":9999:"
-let vdir = "/phonecat"  
-let webBuildPath = buildDir + "/_PublishedWebsites/Web"
 Target "Deploy" (fun _ -> 
+  
+  let siteName = "fsharp"
+  let appPool = "fsharp.appPool"
+  let port = ":9999:"
+  let vdir = "/phonecat"  
+  let webBuildPath = buildDir + "/_PublishedWebsites/Web"
   let sitePhysicalPath = @"c:\inetpub\wwwroot\phonecat"
+  
   XCopy webBuildPath sitePhysicalPath 
-  UnlockSection "system.webServer/security/authentication/anonymousauthentication"
   (IIS
     (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
     (ApplicationPool appPool true "v4.0")
