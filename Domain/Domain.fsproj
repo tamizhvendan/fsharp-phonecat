@@ -58,6 +58,7 @@
     <Compile Include="Catalog.fs" />
     <Compile Include="Recommendation.fs" />
     <Compile Include="UserNavigationHistory.fs" />
+    <Compile Include="Search.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
