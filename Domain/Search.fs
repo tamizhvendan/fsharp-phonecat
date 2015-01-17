@@ -10,7 +10,7 @@ module Search =
 
   type SearchFilter = Ram | Weight | Screen 
 
-  let searchPhones (phones : Catalog.Phone list) (filters : (SearchFilter * ValueFilter) list) =
+  let searchPhones (phones : Catalog.Phone seq) (filters : (SearchFilter * ValueFilter) list) =
 
     let metValueFilter toMeasure valueFilter property  =
       match valueFilter with

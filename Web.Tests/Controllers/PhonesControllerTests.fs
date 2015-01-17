@@ -18,7 +18,7 @@ module PhonesControllerTests =
         ]
         let getTopSellingPhones count phones' =
             phones' |> Seq.take count
-        let sut = new PhonesController(getTopSellingPhones, phones)
+        let sut = new PhonesController(getTopSellingPhones, phones, Seq.empty)
 
         let actualTopSellingPhones = sut.GetTopSelling()
         

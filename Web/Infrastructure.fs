@@ -20,15 +20,15 @@ module Infrastructure =
                 
                 let phones' = phones |> Seq.map TypeProviders.ToPhone
                 let phoneIndexes' = phoneIndexes |> Seq.map TypeProviders.ToPhoneIndex
+                let catalogPhones = phones |> Seq.map TypeProviders.ToCatalogPhone
 
                 if controllerType = typeof<PromotionsController> then
                     let promotionsController = new PromotionsController(getPromotions, phoneIndexes')
                     promotionsController :> IHttpController
             
-                else if controllerType = typeof<PhonesController> then
-                    
+                else if controllerType = typeof<PhonesController> then                    
                     let getTopSellingPhones = Phones.getTopSellingPhones (InMemoryInventory.getPhonesSold())                    
-                    let phonesController = new PhonesController(getTopSellingPhones, phones') 
+                    let phonesController = new PhonesController(getTopSellingPhones, phones', catalogPhones)                    
                     phonesController :> IHttpController           
             
                 else if controllerType = typeof<ManufacturersController> then
