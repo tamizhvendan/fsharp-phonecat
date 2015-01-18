@@ -133,7 +133,7 @@
     <Content Include="Scripts\jquery.signalR-2.1.2.js" />
     <Content Include="Scripts\recommendation.js" />
     <Content Include="Scripts\jquery.noty.packaged.min.js" />
-    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="Scripts\search.js" />
     <Compile Include="Controllers\HomeController.fs" />
     <Compile Include="Controllers\PromotionsController.fs" />
     <Compile Include="Controllers\PhonesController.fs" />
@@ -142,6 +142,7 @@
     <Compile Include="Controllers\ManufacturerController.fs" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Phone\Show.cshtml" />
+    <Content Include="Views\Phone\Search.cshtml" />
     <Content Include="Views\Manufacturer\Show.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -157,7 +158,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Content Include="packages.config" />
-    <Compile Include="Startup.fs" />
+    <Compile Include="Startup.fs" />    
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">

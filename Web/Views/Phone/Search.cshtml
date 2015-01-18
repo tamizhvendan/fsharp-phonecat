@@ -1,0 +1,16 @@
+﻿<style>
+  input { max-width: 1000px;}
+</style>
+
+<div class="row">
+  <div class="col-lg-8">
+    <input type="text" class="input-lg col-lg-10 form-control" data-bind="value: q" placeholder="Search Query...">
+  </div>
+  <div class="col-lg-3">
+    <button class="form-control btn btn-primary btn-lg" data-bind="click: search">Search</button>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/Scripts/search.js"></script>
+}

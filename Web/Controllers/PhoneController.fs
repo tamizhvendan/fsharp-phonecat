@@ -58,6 +58,9 @@ type PhoneController(phones : seq<Phone>) =
     subject.OnNext id 
     this.View(phone)
 
+  member this.Search () =
+    this.View()
+
   override this.Dispose disposing =
     if disposing then 
       subject.OnCompleted()

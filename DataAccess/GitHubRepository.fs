@@ -4,7 +4,7 @@ open PhoneCat.Domain
 module GitHubRepository = 
 
     [<Literal>]
-    let private gitHubRepoUrl = "https://raw.githubusercontent.com/angular/angular-phonecat/master/app/phones/"
+    let private gitHubRepoUrl = "http://localhost:8181/phones/" // + "https://raw.githubusercontent.com/angular/angular-phonecat/master/app/phones/"
     
     let private phoneIndexes = PhoneIndexTypeProvider.Load(gitHubRepoUrl + "phones.json")
 

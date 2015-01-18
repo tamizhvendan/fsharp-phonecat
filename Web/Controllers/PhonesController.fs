@@ -21,9 +21,11 @@ type PhonesController
     member this.GetTopSelling () =
       getTopSellingPhones 3 phones
 
+    
+    [<HttpGet>]
     [<Route("search")>]
-    member this.SearchPhones (filterStr : string) =
-      let parserResult = SearchParser.parseFilter filterStr
+    member this.SearchPhones (q : string) =
+      let parserResult = SearchParser.parseFilter q
       match parserResult with
       | Choice1Of2 filters -> 
         let filteredPhones = Search.searchPhones catalogPhones filters
