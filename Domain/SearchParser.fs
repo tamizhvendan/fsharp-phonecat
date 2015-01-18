@@ -1,5 +1,6 @@
 ﻿namespace PhoneCat.Domain
 open PhoneCat.Domain.Search
+open PhoneCat.Domain.Measures
 open FParsec
 
 module SearchParser =
@@ -10,9 +11,9 @@ module SearchParser =
 
     let toSearchFilter str = 
       match toLowerCase str with
-      | "ram" -> Ram
-      | "weight" -> Weight
-      | "screen" -> Screen
+      | "ram" -> Ram ((*) 1.<MB>)
+      | "weight" -> Weight ((*) 1.<g>)
+      | "screen" -> Screen ((*) 1.<inch>)
       | _ -> failwith "Invalid search filter"
    
     let psearchFilter str = pstring str |>> toSearchFilter

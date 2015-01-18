@@ -3,27 +3,31 @@ open PhoneCat.Domain.Measures
 
 module Search =
   
+
+  type SearchFilter = 
+  | Ram of (float -> float<MB>)
+  | Weight of (float -> float<g>)
+  | Screen of (float -> float<inch>)
+
   type ValueFilter = 
   | Value of float 
   | GreaterThan of float 
-  | Range of float * float
-
-  type SearchFilter = Ram | Weight | Screen 
+  | Range of float * float  
 
   let searchPhones (phones : Catalog.Phone seq) (filters : (SearchFilter * ValueFilter) list) =
 
-    let metValueFilter toMeasure valueFilter property  =
+    let metValueFilter toUom valueFilter property  =
       match valueFilter with
-      | Value x -> property = toMeasure x
-      | GreaterThan x -> property > toMeasure x
-      | Range (x,y) -> property >= toMeasure x && property <= toMeasure y
+      | Value x -> property = toUom x
+      | GreaterThan x -> property > toUom x
+      | Range (x,y) -> property >= toUom x && property <= toUom y
 
     let metSearchFilter filter (phone : Catalog.Phone) =
       let valueFilter = (snd filter)
       match (fst filter) with
-      | Ram -> metValueFilter ((*) 1.0<MB>) valueFilter phone.Storage.Ram
-      | Weight -> metValueFilter ((*) 1.0<g>) valueFilter phone.Weight
-      | Screen -> metValueFilter ((*) 1.0<inch>) valueFilter phone.Display.ScreenSize
+      | Ram toMB -> metValueFilter toMB valueFilter phone.Storage.Ram
+      | Weight toG -> metValueFilter toG valueFilter phone.Weight
+      | Screen toInch-> metValueFilter toInch valueFilter phone.Display.ScreenSize
 
     let filterPhones phones' filter =
       phones'
