@@ -3,6 +3,20 @@
 </style>
 
 <div class="row">
+  <div class="bs-callout bs-callout-info">
+    <h4>Search Query Syntax</h4>
+    <p>Available Search filters : <code>screen</code>, <code>weight</code>, <code>ram</code>. <code>;</code> can be used to specify multiple filters. Each search filter should be accompanied with a value filter and its corresponding unit of measure. Search filter and value filter are seperated using ':' </p>
+    <p>Corresponding Unit of Measures <code>:</code> inch for screen, g for weight, mb for ram </p>
+    <p>Available Value filters : value <code>{value}</code> greaterThan <code>>{value}{unitOfMeasure}</code> and range <code>>{value}-{value}{unitOfMeasure}</code></p>
+    <p>Sample inputs</p>
+    <p> <code>weight:>300g</code> </p>
+    <p> <code>weight:500g</code> </p>
+    <p> <code>screen:8-10inch</code> </p>
+    <p> <code>weight:>300g;ram:200-500MB;screen:>3inch</code> </p>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-lg-8">
     <input type="text" class="input-lg col-lg-10 form-control" data-bind="value: q" placeholder="Search Query...">
   </div>
@@ -10,6 +24,50 @@
     <button class="form-control btn btn-primary btn-lg" data-bind="click: search">Search</button>
   </div>
 </div>
+
+
+
+<br />
+<br />
+
+<div class="row">
+  <p data-bind="visible: isSearching">
+    Loading.. Please Wait..
+  </p>
+</div>
+
+
+<div class="row">
+  <p data-bind="visible: isEmptyResults">
+    No Phones Found
+  </p>
+</div>
+
+
+<div class="row">
+  <div data-bind="visible: isSearchQueryError">
+    <div class="alert alert-danger" role="alert">
+      <pre data-bind="text: errorMsg"></pre>
+    </div>
+  </div>
+</div>
+
+<div class="row" data-bind="foreach : searchResults">
+
+  <div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="thumbnail">
+      <img data-bind="attr : { src : imageUrl, alt : name }" />
+      <div class="caption">
+        <h4>
+          <a data-bind="attr : { href : phoneUrl }, text : name"></a>
+        </h4>
+        <p data-bind="text : description"></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
 @section scripts {
   <script src="~/Scripts/search.js"></script>
