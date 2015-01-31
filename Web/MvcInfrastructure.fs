@@ -25,5 +25,8 @@ module MvcInfrastructure =
           let getPhonesByManufactuerName = phones |> Seq.map TypeProviders.ToPhone |> Phones.getPhonesOfManufacturer
           let manufacturerController = new ManufacturerController(getPhonesByManufactuerName)
           manufacturerController :> IController
+        else if controllerType = typeof<AuthenticationController> then
+          let authenticationController = new AuthenticationController()
+          authenticationController :> IController
         else
           raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))

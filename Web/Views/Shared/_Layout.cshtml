@@ -23,7 +23,6 @@
         <a class="navbar-brand" href="@Url.Action("Index", "Home")">PhoneCat Powered By F#</a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li>
             <a href="@Url.Action("Search", "Phone")">Phone Search</a>
@@ -38,10 +37,15 @@
             <a href="http://about.me/tamizhvendan">Contact</a>
           </li>
         </ul>
-      </div>
+      
+
+      <ul class="nav navbar-nav navbar-right top-nav">
+        <li><a href="@Url.Action("Login","Authentication")">Login</a></li>
+      </ul>
       <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->
+    
   </nav>
 
   <div class="container body-content">
