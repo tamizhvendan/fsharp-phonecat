@@ -20,6 +20,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DataAccess.Tests", "DataAcc
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Domain.Tests", "Domain.Tests\Domain.Tests.fsproj", "{D0558C75-978B-46FB-A99C-DC3675A42480}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Identity", "Identity\Identity.fsproj", "{17997681-FD93-49CC-9250-9ADEBEF53D77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{D0558C75-978B-46FB-A99C-DC3675A42480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0558C75-978B-46FB-A99C-DC3675A42480}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0558C75-978B-46FB-A99C-DC3675A42480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17997681-FD93-49CC-9250-9ADEBEF53D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17997681-FD93-49CC-9250-9ADEBEF53D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17997681-FD93-49CC-9250-9ADEBEF53D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17997681-FD93-49CC-9250-9ADEBEF53D77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

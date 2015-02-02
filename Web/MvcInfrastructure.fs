@@ -8,6 +8,16 @@ open System.Web.Mvc
 open Hubs
 
 module MvcInfrastructure =    
+  open Microsoft.AspNet.Identity
+  open Microsoft.AspNet.Identity.EntityFramework
+  open Identity
+
+  let private createUserManager () =
+    let userManager = new UserManager<User>(new UserStore<User>(new UserDbContext()))
+    let userValidator = new UserValidator<User>(userManager)
+    userValidator.AllowOnlyAlphanumericUserNames <- false
+    userManager.UserValidator <- userValidator
+    userManager
 
   type CompositionRoot(phones : seq<PhoneTypeProvider.Root>) =          
     inherit DefaultControllerFactory() with
@@ -26,7 +36,7 @@ module MvcInfrastructure =
           let manufacturerController = new ManufacturerController(getPhonesByManufactuerName)
           manufacturerController :> IController
         else if controllerType = typeof<AuthenticationController> then
-          let authenticationController = new AuthenticationController()
+          let authenticationController = new AuthenticationController(createUserManager())
           authenticationController :> IController
         else
           raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))

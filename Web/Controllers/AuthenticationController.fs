@@ -5,6 +5,9 @@ open System.ComponentModel.DataAnnotations
 open System.Web
 open System.Security.Claims
 open Microsoft.AspNet.Identity
+open Identity
+open Microsoft.AspNet.Identity
+open System.Web.Helpers.Claims
 
 [<CLIMutable>]
 type LoginViewModel = {
@@ -12,23 +15,38 @@ type LoginViewModel = {
   Password : string
 }
 
-type AuthenticationController () = 
+type LoginResult = 
+  | Success of ClaimsIdentity
+  | Failure
+
+type AuthenticationController (userManager : UserManager<User>) = 
   inherit Controller()
+
+  let login email password (userManager : UserManager<User>) =
+    let user = userManager.Find(email, password)
+    if user = null then
+      Failure
+    else
+      let identity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie)
+      Success identity
+
   member this.Login() =     
     this.View()
 
+  
   [<HttpPost>]
   [<ValidateAntiForgeryToken>]
   member this.Login(loginViewModel : LoginViewModel) : ActionResult =
-    
-    if (loginViewModel.Email = "a@b.com" && loginViewModel.Password = "barbar") then
-      let authManager = base.Request.GetOwinContext().Authentication
-      let claim = new Claim(ClaimTypes.Name, "tam")
-      let identity = new ClaimsIdentity([claim], DefaultAuthenticationTypes.ApplicationCookie)
-      authManager.SignIn(identity);
-      this.RedirectToAction("Index", "Home") :> ActionResult
-    else  
+
+    match login loginViewModel.Email loginViewModel.Password userManager with
+    | Failure ->
+      this.ModelState.AddModelError("", "Invalid Email or Password")
       this.View(loginViewModel) :> ActionResult
+    | Success identity ->
+      let authManager = base.Request.GetOwinContext().Authentication
+      authManager.SignIn(identity)
+      this.RedirectToAction("Index", "Home") :> ActionResult   
+    
 
   member this.Logout() =
     let authManager = base.Request.GetOwinContext().Authentication
