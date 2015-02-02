@@ -29,13 +29,19 @@ type LoginResult =
 type AuthenticationController (userManager : UserManager<User>) = 
   inherit Controller()
 
-  let login email password (userManager : UserManager<User>) =
+  let createIdentity (userManager : UserManager<User>) user =
+    userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie)
+
+  let signin (request : HttpRequestBase) (identity : ClaimsIdentity) =
+    let authManager = request.GetOwinContext().Authentication
+    authManager.SignIn(identity)
+
+  let tryGetIdentity (userManager : UserManager<User>) email password  =
     let user = userManager.Find(email, password)
     if user = null then
       Failure
     else
-      let identity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie)
-      Success identity
+      Success (createIdentity userManager user)
 
   member this.Login() =     
     this.View()
@@ -45,13 +51,12 @@ type AuthenticationController (userManager : UserManager<User>) =
   [<ValidateAntiForgeryToken>]
   member this.Login(loginViewModel : LoginViewModel) : ActionResult =
 
-    match login loginViewModel.Email loginViewModel.Password userManager with
+    match tryGetIdentity userManager loginViewModel.Email loginViewModel.Password  with
     | Failure ->
       this.ModelState.AddModelError("", "Invalid Email or Password")
       this.View(loginViewModel) :> ActionResult
     | Success identity ->
-      let authManager = base.Request.GetOwinContext().Authentication
-      authManager.SignIn(identity)
+      signin base.Request identity
       this.RedirectToAction("Index", "Home") :> ActionResult   
     
 
@@ -67,7 +72,18 @@ type AuthenticationController (userManager : UserManager<User>) =
   [<HttpPost>]
   [<ValidateAntiForgeryToken>]
   member this.Register(registerViewModel : RegisterViewModel) : ActionResult =
-    this.View(registerViewModel) :> ActionResult 
+    
+    let user = new User(Name = registerViewModel.Name, UserName = registerViewModel.Email , Email = registerViewModel.Email)
+    let userCreateResult = userManager.Create(user, registerViewModel.Password)
+    if (userCreateResult.Succeeded) then
+      user
+      |> createIdentity userManager
+      |> signin base.Request
+      this.RedirectToAction("Index", "Home") :> ActionResult
+    else
+      userCreateResult.Errors
+      |> Seq.iter(fun err -> this.ModelState.AddModelError("", err))
+      this.View(registerViewModel) :> ActionResult 
 
   override this.Dispose(disposing) =
     if disposing then
