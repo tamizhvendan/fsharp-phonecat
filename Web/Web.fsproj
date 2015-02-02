@@ -149,6 +149,7 @@
     <Content Include="Views\Phone\Search.cshtml" />
     <Content Include="Views\Manufacturer\Show.cshtml" />
     <Content Include="Views\Authentication\Login.cshtml" />
+    <Content Include="Views\Authentication\Register.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />

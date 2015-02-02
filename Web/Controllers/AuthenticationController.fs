@@ -15,6 +15,13 @@ type LoginViewModel = {
   Password : string
 }
 
+[<CLIMutable>]
+type RegisterViewModel = {
+  Name : string
+  Email : string
+  Password : string
+}
+
 type LoginResult = 
   | Success of ClaimsIdentity
   | Failure
@@ -52,4 +59,19 @@ type AuthenticationController (userManager : UserManager<User>) =
     let authManager = base.Request.GetOwinContext().Authentication
     authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie)
     this.RedirectToAction("Index", "Home")
+
+
+  member this.Register() =
+    this.View()
+
+  [<HttpPost>]
+  [<ValidateAntiForgeryToken>]
+  member this.Register(registerViewModel : RegisterViewModel) : ActionResult =
+    this.View(registerViewModel) :> ActionResult 
+
+  override this.Dispose(disposing) =
+    if disposing then
+      userManager.Dispose()
+    base.Dispose(disposing)
+
 
