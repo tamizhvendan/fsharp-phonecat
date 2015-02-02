@@ -40,7 +40,16 @@
       
 
       <ul class="nav navbar-nav navbar-right top-nav">
-        <li><a href="@Url.Action("Login","Authentication")">Login</a></li>
+        
+        @if (Request.IsAuthenticated)
+        {
+          <li><a href="@Url.Action("Logout","Authentication")">@User.Identity.Name</a></li>
+        }
+        else
+        {
+          <li><a href="@Url.Action("Login","Authentication")">Login</a></li>
+        }
+        
       </ul>
       <!-- /.navbar-collapse -->
     </div>
