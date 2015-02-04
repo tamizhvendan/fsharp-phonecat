@@ -60,6 +60,10 @@
       <HintPath>..\packages\FsUnit.1.3.0.1\Lib\Net40\FsUnit.NUnit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -87,6 +91,11 @@
     <ProjectReference Include="..\Domain\Domain.fsproj">
       <Name>Domain</Name>
       <Project>{e6042abd-7c0f-4725-8297-04bd31497368}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Identity\Identity.fsproj">
+      <Name>Identity</Name>
+      <Project>{17997681-fd93-49cc-9250-9adebef53d77}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\Web\Web.fsproj">

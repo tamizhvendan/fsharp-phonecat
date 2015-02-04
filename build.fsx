@@ -32,7 +32,7 @@ Target "Deploy" (fun _ ->
   let vdir = "/phonecat"  
   let webBuildPath = buildDir + "/_PublishedWebsites/Web"
   let sitePhysicalPath = @"c:\inetpub\wwwroot\phonecat"
-  
+  CleanDir sitePhysicalPath
   XCopy webBuildPath sitePhysicalPath 
   (IIS
     (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
