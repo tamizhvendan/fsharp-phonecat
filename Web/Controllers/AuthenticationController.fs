@@ -33,42 +33,35 @@ type AuthenticationController (userManager : UserManager<User>) =
 
   let tryFindUser (userManager : UserManager<User>) email password  =
     let user = userManager.Find(email, password)
-    if user = null then
-      None
-    else
-      Some user
+    if user <> null then Some user else None
 
-  member this.Login() =     
-    this.View()
-
-  
+  member this.Login() = this.View()
+    
   [<HttpPost>]
   [<ValidateAntiForgeryToken>]
   member this.Login(loginViewModel : LoginViewModel) : ActionResult =
-
     match tryFindUser userManager loginViewModel.Email loginViewModel.Password  with
     | None ->
       this.ModelState.AddModelError("", "Invalid Email or Password")
       this.View(loginViewModel) :> ActionResult
     | Some user ->
       signin userManager base.Request user
-      this.RedirectToAction("Index", "Home") :> ActionResult   
-    
+      this.RedirectToAction("Index", "Home") :> ActionResult       
 
   member this.Logout() =
     let authManager = base.Request.GetOwinContext().Authentication
     authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie)
     this.RedirectToAction("Index", "Home")
 
-
-  member this.Register() =
-    this.View()
+  member this.Register() = this.View()    
 
   [<HttpPost>]
   [<ValidateAntiForgeryToken>]
   member this.Register(registerViewModel : RegisterViewModel) : ActionResult =
     
-    let user = new User(Name = registerViewModel.Name, UserName = registerViewModel.Email , Email = registerViewModel.Email)
+    let user = new User(Name = registerViewModel.Name, 
+                        UserName = registerViewModel.Email , 
+                        Email = registerViewModel.Email)
     let userCreateResult = userManager.Create(user, registerViewModel.Password)
     if (userCreateResult.Succeeded) then
       signin userManager base.Request user      
