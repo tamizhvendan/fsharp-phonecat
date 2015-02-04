@@ -22,26 +22,21 @@ type RegisterViewModel = {
   Password : string
 }
 
-type LoginResult = 
-  | Success of ClaimsIdentity
-  | Failure
-
 type AuthenticationController (userManager : UserManager<User>) = 
   inherit Controller()
 
-  let createIdentity (userManager : UserManager<User>) user =
-    userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie)
-
-  let signin (request : HttpRequestBase) (identity : ClaimsIdentity) =
+  let signin (userManager : UserManager<User>) (request : HttpRequestBase) user  =
+    let identity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie)
     let authManager = request.GetOwinContext().Authentication
+    identity.AddClaim(new Claim(ClaimTypes.GivenName, user.Name))
     authManager.SignIn(identity)
 
-  let tryGetIdentity (userManager : UserManager<User>) email password  =
+  let tryFindUser (userManager : UserManager<User>) email password  =
     let user = userManager.Find(email, password)
     if user = null then
-      Failure
+      None
     else
-      Success (createIdentity userManager user)
+      Some user
 
   member this.Login() =     
     this.View()
@@ -51,12 +46,12 @@ type AuthenticationController (userManager : UserManager<User>) =
   [<ValidateAntiForgeryToken>]
   member this.Login(loginViewModel : LoginViewModel) : ActionResult =
 
-    match tryGetIdentity userManager loginViewModel.Email loginViewModel.Password  with
-    | Failure ->
+    match tryFindUser userManager loginViewModel.Email loginViewModel.Password  with
+    | None ->
       this.ModelState.AddModelError("", "Invalid Email or Password")
       this.View(loginViewModel) :> ActionResult
-    | Success identity ->
-      signin base.Request identity
+    | Some user ->
+      signin userManager base.Request user
       this.RedirectToAction("Index", "Home") :> ActionResult   
     
 
@@ -76,9 +71,7 @@ type AuthenticationController (userManager : UserManager<User>) =
     let user = new User(Name = registerViewModel.Name, UserName = registerViewModel.Email , Email = registerViewModel.Email)
     let userCreateResult = userManager.Create(user, registerViewModel.Password)
     if (userCreateResult.Succeeded) then
-      user
-      |> createIdentity userManager
-      |> signin base.Request
+      signin userManager base.Request user      
       this.RedirectToAction("Index", "Home") :> ActionResult
     else
       userCreateResult.Errors

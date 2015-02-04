@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -43,9 +45,11 @@
         
         @if (Request.IsAuthenticated)
         {
+          var identity = User.Identity as ClaimsIdentity;
+          var name = identity.FindFirst(ClaimTypes.GivenName).Value;
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-user"></i> 
-            @User.Identity.Name <b class="caret"></b></a>
+             @name<b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li>
                 <a href="@Url.Action("Logout","Authentication")"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
