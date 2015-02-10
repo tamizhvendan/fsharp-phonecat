@@ -12,13 +12,6 @@ module MvcInfrastructure =
   open Microsoft.AspNet.Identity.EntityFramework
   open Identity
 
-  let private createUserManager () =
-    let userManager = new UserManager<User>(new UserStore<User>(new UserDbContext()))
-    let userValidator = new UserValidator<User>(userManager)
-    userValidator.AllowOnlyAlphanumericUserNames <- false
-    userManager.UserValidator <- userValidator
-    userManager
-
   type CompositionRoot(phones : seq<PhoneTypeProvider.Root>) =          
     inherit DefaultControllerFactory() with
       override this.GetControllerInstance(requestContext, controllerType) = 

@@ -59,17 +59,21 @@ type AuthenticationController (userManager : UserManager<User>) =
   [<ValidateAntiForgeryToken>]
   member this.Register(registerViewModel : RegisterViewModel) : ActionResult =
     
-    let user = new User(Name = registerViewModel.Name, 
-                        UserName = registerViewModel.Email , 
-                        Email = registerViewModel.Email)
-    let userCreateResult = userManager.Create(user, registerViewModel.Password)
-    if (userCreateResult.Succeeded) then
-      signin userManager base.Request user      
-      this.RedirectToAction("Index", "Home") :> ActionResult
+    if isUserNameExists userManager registerViewModel.Email then
+      this.ModelState.AddModelError("Email", "User with the email id already exists")
+      this.View(registerViewModel) :> ActionResult
     else
-      userCreateResult.Errors
-      |> Seq.iter(fun err -> this.ModelState.AddModelError("", err))
-      this.View(registerViewModel) :> ActionResult 
+      let user = new User(Name = registerViewModel.Name, 
+                          UserName = registerViewModel.Email, 
+                          Email = registerViewModel.Email)
+      let userCreateResult = userManager.Create(user, registerViewModel.Password)
+      if (userCreateResult.Succeeded) then
+        signin userManager base.Request user      
+        this.RedirectToAction("Index", "Home") :> ActionResult
+      else
+        userCreateResult.Errors
+        |> Seq.iter(fun err -> this.ModelState.AddModelError("", err))
+        this.View(registerViewModel) :> ActionResult 
 
   override this.Dispose(disposing) =
     if disposing then
