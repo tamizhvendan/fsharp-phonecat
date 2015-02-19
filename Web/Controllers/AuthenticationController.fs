@@ -59,10 +59,11 @@ type AuthenticationController (userManager : UserManager<User>) =
   [<ValidateAntiForgeryToken>]
   member this.Register(registerViewModel : RegisterViewModel) : ActionResult =
     
-    if isUserNameExists userManager registerViewModel.Email then
-      this.ModelState.AddModelError("Email", "User with the email id already exists")
+    match UserValidation.validateEmail userManager registerViewModel.Email with
+    | Failure validationError ->
+      this.ModelState.AddModelError(validationError.Property, validationError.Message)
       this.View(registerViewModel) :> ActionResult
-    else
+    | Success _ ->    
       let user = new User(Name = registerViewModel.Name, 
                           UserName = registerViewModel.Email, 
                           Email = registerViewModel.Email)

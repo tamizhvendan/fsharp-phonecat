@@ -12,11 +12,16 @@ type User() =
 type UserDbContext() =
   inherit IdentityDbContext<User>("IdentityConnection")
 
+type ValidationError = {Property : string; Message : string}
+
+type ValidationResult<'a> = 
+  | Success of 'a
+  | Failure of ValidationError
 
 [<AutoOpen>]
 module Users =   
   
-  let createUserValidator userManager =
+  let private createUserValidator userManager =
     let userValidator = new UserValidator<User>(userManager)
     userValidator.AllowOnlyAlphanumericUserNames <- false
     userValidator
@@ -26,13 +31,6 @@ module Users =
     userManager.UserValidator <- (createUserValidator userManager)
     userManager
 
-  let isUserNameExists (userManager : UserManager<User>) userName =
-    let user = userManager.FindByName(userName)
+  let isEmailAddrAlreadyExists (userManager : UserManager<User>) emailAddr =
+    let user = userManager.FindByName(emailAddr)
     user <> null
-
-  let validate userManager user =
-    let validator = createUserValidator userManager
-    async {
-      let! result = validator.ValidateAsync(user) |> Async.AwaitTask
-      return result.Errors
-    } |> Async.RunSynchronously
