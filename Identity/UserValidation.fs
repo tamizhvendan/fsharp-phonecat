@@ -4,7 +4,7 @@ open System
 open System.Text.RegularExpressions
 
 module UserValidation =   
-  
+
   let private validateEmailForEmptiness emailAddr =
     if (emailAddr = null || emailAddr = String.Empty) then
       Failure {Property = "Email"; Message = "Email is required"}
@@ -30,20 +30,29 @@ module UserValidation =
     if isValidEmailAddress then 
       Success emailAddr
     else
-      Failure {Property = "Email"; Message = "Email address " + emailAddr + " is invalid"}  
+      Failure {Property = "Email"; Message = "Email address " + emailAddr + " is invalid"}
+ 
+  let private validateNameForEmptiness name =
+    if (name = null || name = String.Empty) then
+      Failure {Property = "Name"; Message = "Name is required"}
+    else
+      Success name
 
-  let validateEmail userManager emailAddr =
+  let validateEmail userManager name emailAddr =
     match validateEmailForEmptiness emailAddr with
-    | Failure validationError -> Failure validationError
-    | Success _ ->
-      match validateEmailForCorrectness emailAddr with
       | Failure validationError -> Failure validationError
-      | Success _ -> 
-        match validateEmailForLength emailAddr with
+      | Success _ ->
+        match validateEmailForCorrectness emailAddr with
         | Failure validationError -> Failure validationError
         | Success _ -> 
-          match validateEmailForUniqueness (isEmailAddrAlreadyExists userManager) emailAddr with
+          match validateEmailForLength emailAddr with
           | Failure validationError -> Failure validationError
-          | Success _ -> Success emailAddr
-          
-     
+          | Success _ -> 
+            match validateEmailForUniqueness (isEmailAddrAlreadyExists userManager) emailAddr with
+            | Failure validationError -> Failure validationError
+            | Success _ -> 
+              match validateNameForEmptiness name with
+              | Failure validationError -> Failure validationError
+              | Success name -> Success name 
+    
+   

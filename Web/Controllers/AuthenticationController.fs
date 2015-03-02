@@ -59,7 +59,7 @@ type AuthenticationController (userManager : UserManager<User>) =
   [<ValidateAntiForgeryToken>]
   member this.Register(registerViewModel : RegisterViewModel) : ActionResult =
     
-    match UserValidation.validateEmail userManager registerViewModel.Email with
+    match UserValidation.validateEmail userManager registerViewModel.Name registerViewModel.Email with
     | Failure validationError ->
       this.ModelState.AddModelError(validationError.Property, validationError.Message)
       this.View(registerViewModel) :> ActionResult
