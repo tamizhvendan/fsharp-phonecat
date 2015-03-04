@@ -58,23 +58,18 @@ type AuthenticationController (userManager : UserManager<User>) =
   [<HttpPost>]
   [<ValidateAntiForgeryToken>]
   member this.Register(registerViewModel : RegisterViewModel) : ActionResult =
-    
-    match UserValidation.validateEmail userManager registerViewModel.Name registerViewModel.Email with
-    | Failure validationError ->
-      this.ModelState.AddModelError(validationError.Property, validationError.Message)
+    let userDto : UserDto = {
+      Name = registerViewModel.Name; 
+      Email = registerViewModel.Email; 
+      Password = registerViewModel.Password 
+    }
+    match Users.createUser userManager userDto with
+    | Failure error ->
+      this.ModelState.AddModelError(error.Property, error.Message)
       this.View(registerViewModel) :> ActionResult
-    | Success _ ->    
-      let user = new User(Name = registerViewModel.Name, 
-                          UserName = registerViewModel.Email, 
-                          Email = registerViewModel.Email)
-      let userCreateResult = userManager.Create(user, registerViewModel.Password)
-      if (userCreateResult.Succeeded) then
-        signin userManager base.Request user      
-        this.RedirectToAction("Index", "Home") :> ActionResult
-      else
-        userCreateResult.Errors
-        |> Seq.iter(fun err -> this.ModelState.AddModelError("", err))
-        this.View(registerViewModel) :> ActionResult 
+    | Success user ->                                
+      signin userManager base.Request user      
+      this.RedirectToAction("Index", "Home") :> ActionResult     
 
   override this.Dispose(disposing) =
     if disposing then
