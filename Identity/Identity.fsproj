@@ -49,7 +49,14 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <Compile Include="Rop.fs" />
     <Compile Include="User.fs" />
+    <Compile Include="EmailValidation.fs" />
+    <Compile Include="Validation.fs" />
+    <Compile Include="NameValidation.fs" />
+    <Compile Include="PasswordValidation.fs" />
+    <Compile Include="UserValidation.fs" />
+    <Compile Include="UserStorage.fs" />
     <Content Include="packages.config" />
     <Content Include="App.config" />
   </ItemGroup>

@@ -6,6 +6,7 @@ open System.Web
 open System.Security.Claims
 open Microsoft.AspNet.Identity
 open Identity
+open Identity.Rop
 open Microsoft.AspNet.Identity
 open System.Web.Helpers.Claims
 
@@ -58,12 +59,12 @@ type AuthenticationController (userManager : UserManager<User>) =
   [<HttpPost>]
   [<ValidateAntiForgeryToken>]
   member this.Register(registerViewModel : RegisterViewModel) : ActionResult =
-    let userDto : UserDto = {
+    let createUserRequest : CreateUserRequest = {
       Name = registerViewModel.Name; 
       Email = registerViewModel.Email; 
       Password = registerViewModel.Password 
     }
-    match Users.createUser userManager userDto with
+    match UserStorage.createUser userManager createUserRequest with
     | Failure error ->
       this.ModelState.AddModelError(error.Property, error.Message)
       this.View(registerViewModel) :> ActionResult
