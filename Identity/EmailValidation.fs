@@ -1,33 +1,35 @@
 ﻿namespace Identity
 open Microsoft.AspNet.Identity
 open Rop
+open Validation
 open System.Text.RegularExpressions
 open System
 
-module EmailValidation =  
-  
+module EmailValidation =   
   let isUniqueEmailAddr (userManager : UserManager<User>) emailAddr =
     let user = userManager.FindByName(emailAddr)
-    user = null   
-
-  let validateEmailEmptiness createUserRequest =
-    if (createUserRequest.Email <> null && createUserRequest.Email <> String.Empty) then
-      Success createUserRequest      
-    else
-      Failure {Property = "Email"; Message = "Email is required"}
-
-  let validateEmailUniqueness isUniqueEmailAddr createUserRequest =
-    if isUniqueEmailAddr createUserRequest.Email then
-      Success createUserRequest      
-    else
-      Failure {Property = "Email"; Message = "Email address " + createUserRequest.Email + " already exists"}      
-
-  let validateEmailCorrectness createUserRequest =
+    user = null 
+    
+  let isValidEmailAddress emailAddr =
     let emailAddrRegex = 
-      @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z"
-    let isValidEmailAddress = Regex.IsMatch(createUserRequest.Email, emailAddrRegex, RegexOptions.IgnoreCase)
-    if isValidEmailAddress then 
-      Success createUserRequest
-    else
-      Failure {Property = "Email"; Message = "Email address " + createUserRequest.Email + " is invalid"}
+      @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)" +
+        "*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z"
+    Regex.IsMatch(emailAddr, emailAddrRegex, RegexOptions.IgnoreCase)
 
+  let validateEmailEmptiness =
+    validate 
+      (fun createUserRequest -> isNonEmptyString createUserRequest.Email) 
+      "Email" 
+      "Email is required"    
+
+  let validateEmailUniqueness isUniqueEmailAddr =
+    validate 
+      (fun createUserRequest -> isUniqueEmailAddr createUserRequest.Email) 
+      "Email" 
+      "Email address already exists"    
+
+  let validateEmailCorrectness =
+    validate 
+      (fun createUserRequest -> isValidEmailAddress createUserRequest.Email) 
+      "Email" 
+      "Email address is invalid"
