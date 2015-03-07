@@ -24,7 +24,7 @@ module UserStorage =
                           Email = createUserRequest.Email)
       let identityResult = userManager.Create(user, createUserRequest.Password)
       if identityResult.Succeeded then
-        Success user
+        Success createUserRequest
       else
         let errors = String.concat "," identityResult.Errors
         Failure {Property = ""; Message = errors}
@@ -32,8 +32,7 @@ module UserStorage =
       | _ ->
         Failure {Property = ""; Message = "An unexpected error happened while creating new user"}
 
-  let createUser (userManager : UserManager<User>) createUserRequest =
-      match validateCreateUserRequest userManager createUserRequest with
-      | Failure error -> Failure error
-      | Success _ -> createUser' userManager createUserRequest
+  let createUser (userManager : UserManager<User>) =
+      validateCreateUserRequest userManager >>= createUser' userManager
+        
 

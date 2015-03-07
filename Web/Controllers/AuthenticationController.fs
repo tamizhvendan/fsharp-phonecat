@@ -68,7 +68,8 @@ type AuthenticationController (userManager : UserManager<User>) =
     | Failure error ->
       this.ModelState.AddModelError(error.Property, error.Message)
       this.View(registerViewModel) :> ActionResult
-    | Success user ->                                
+    | Success createUserRequest' ->                      
+      let user = userManager.Find(createUserRequest'.Email, createUserRequest'.Password)        
       signin userManager base.Request user      
       this.RedirectToAction("Index", "Home") :> ActionResult     
 
