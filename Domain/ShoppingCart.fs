@@ -4,7 +4,7 @@ module ShoppingCart =
 
   type ProductId = string
     
-  type ShoppingCart =
+  type Cart =
     | Empty
     | Active of ProductId List
 

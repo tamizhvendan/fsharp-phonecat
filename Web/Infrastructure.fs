@@ -6,7 +6,7 @@ open System.Web.Http.Controllers
 open PhoneCat.Web.Controllers
 open PhoneCat.DataAccess
 open PhoneCat.Domain
-
+open System.Net.Http
 open System.Web
 
 module Infrastructure =           
@@ -37,10 +37,14 @@ module Infrastructure =
                   let manufacturersController = new ManufacturersController(getManufacturerNames, phones')
                   manufacturersController :> IHttpController 
 
-                else if controllerType = typeof<ShoppingCartController> then
-                  let session = HttpContext.Current.Session
-                  let shoppingCart = ShoppingCartController.GetShoppingCart(session)
-                  let shoppingCartController = new ShoppingCartController(shoppingCart)
+                else if controllerType = typeof<ShoppingCartController> then                  
+                  let anonymousID = HttpContext.Current.Request.AnonymousID
+                  let shoppingCart = 
+                    match CartStorage.get anonymousID with
+                    | Some cart -> cart
+                    | None -> CartStorage.create anonymousID ShoppingCart.Empty
+                                                                                            
+                  let shoppingCartController = new ShoppingCartController(shoppingCart, CartStorage.update anonymousID)
                   shoppingCartController :> IHttpController
                 else
                     raise <| ArgumentException((sprintf "Unknown controller type requested: %A" controllerType))    

@@ -5,25 +5,22 @@ open System.Web.SessionState
 open PhoneCat.Domain.ShoppingCart
 
 [<RoutePrefix("api/cart")>]
-type ShoppingCartController (cart : ShoppingCart) =
-  inherit ApiController ()
-   
-      //let cart = session.[]
-      //()
+type ShoppingCartController 
+  (
+    cart : Cart,
+    updateCart : Cart -> Cart
+  ) =
+  inherit ApiController () 
+
+  [<Route("")>]
+  member this.Get() = cart
 
   [<HttpPost>]
   [<Route("add")>]
-  member this.AddItem(productId : string) = 
-    productId
+  member this.AddItem([<FromBody>]productId : string) = 
+    addItem cart productId |> updateCart
     
-
-  static member GetShoppingCart (session : HttpSessionState) = 
-    try 
-      let cart = session.["Cart"] :?> ShoppingCart
-      cart
-    with
-      | _ ->
-        ShoppingCart.Empty
-  
-
-
+  [<HttpPost>]
+  [<Route("remove")>]
+  member this.RemoveItem([<FromBody>]productId : string) =
+    removeItem cart productId |> updateCart
