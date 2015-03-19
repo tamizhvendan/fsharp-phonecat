@@ -137,6 +137,7 @@
     <Content Include="Scripts\recommendation.js" />
     <Content Include="Scripts\jquery.noty.packaged.min.js" />
     <Content Include="Scripts\search.js" />
+    <Content Include="Scripts\site.js" />
     <Compile Include="Controllers\HomeController.fs" />
     <Compile Include="Controllers\PromotionsController.fs" />
     <Compile Include="Controllers\PhonesController.fs" />

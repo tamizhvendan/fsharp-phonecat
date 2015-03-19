@@ -42,44 +42,50 @@
 
 
       <ul class="nav navbar-nav navbar-right top-nav">
+          
+          <li>
+              <a href='@Url.Action("Show", "Cart")'>
+                  <i class="fa fa-shopping-cart"></i> Cart (<span id="cartItemCount">0</span>)
+              </a>
+          </li>
 
-        @if (Request.IsAuthenticated)
-        {
-          var identity = User.Identity as ClaimsIdentity;
-          var name = identity.FindFirst(ClaimTypes.GivenName).Value;
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-              <i class="fa fa-user"></i>@name
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="@Url.Action("Logout","Authentication")">
-                  <i class="fa fa-fw fa-power-off"></i> Log Out
-                </a>
+          @if (Request.IsAuthenticated)
+          {
+              var identity = User.Identity as ClaimsIdentity;
+              var name = identity.FindFirst(ClaimTypes.GivenName).Value;
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                      <i class="fa fa-user"></i>@name
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li>
+                          <a href="@Url.Action("Logout","Authentication")">
+                              <i class="fa fa-fw fa-power-off"></i> Log Out
+                          </a>
+                      </li>
+                  </ul>
               </li>
-            </ul>
-          </li>
-        }
-        else
-        {
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-              <i class="fa fa-user"></i> Guest
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="@Url.Action("Login","Authentication")">
-                  <i class="fa fa-fw fa-bank"></i> Log In
-                </a>
+          }
+          else
+          {
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                      <i class="fa fa-user"></i> Guest
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li>
+                          <a href="@Url.Action("Login","Authentication")">
+                              <i class="fa fa-fw fa-bank"></i> Log In
+                          </a>
+                      </li>
+                      <li>
+                          <a href="@Url.Action("Register","Authentication")">
+                              <i class="fa fa-fw fa-laptop"></i>Register
+                          </a>
+                      </li>
+                  </ul>
               </li>
-              <li>
-                <a href="@Url.Action("Register","Authentication")">
-                  <i class="fa fa-fw fa-laptop"></i>Register
-                </a>
-              </li>
-            </ul>
-          </li>
-        }
+          }
 
       </ul>
       <!-- /.navbar-collapse -->
@@ -115,6 +121,7 @@
   @Scripts.Render("~/bundles/jquery")
   @Scripts.Render("~/bundles/bootstrap")
   @Scripts.Render("~/bundles/knockout")
+    <script type="text/javascript" src="~/Scripts/site.js"></script>
   @RenderSection("scripts", required: false)
 </body>
 </html>

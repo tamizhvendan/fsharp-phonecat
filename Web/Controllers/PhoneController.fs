@@ -9,6 +9,7 @@ open System.Reactive.Subjects
 type PhoneViewModel = 
   {
     Name : string
+    Id : string
     Description : string
     Os : string
     Ui : string
@@ -43,6 +44,7 @@ type PhoneViewModel =
           Primary = phone.Camera.Primary
           Features = phone.Camera.Features
           Images = phone.Images
+          Id = phone.Id
         }
 
 type PhoneController(phones : seq<Phone>) =
