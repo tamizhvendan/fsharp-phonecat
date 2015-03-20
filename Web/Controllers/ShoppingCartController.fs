@@ -19,8 +19,3 @@ type ShoppingCartController
   [<Route("add")>]
   member this.AddItem([<FromBody>]productId : string) = 
     addItem cart productId |> updateCart
-    
-  [<HttpPost>]
-  [<Route("remove")>]
-  member this.RemoveItem([<FromBody>]productId : string) =
-    removeItem cart productId |> updateCart
