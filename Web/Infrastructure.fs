@@ -39,10 +39,7 @@ module Infrastructure =
 
                 else if controllerType = typeof<ShoppingCartController> then                  
                   let anonymousID = HttpContext.Current.Request.AnonymousID
-                  let shoppingCart = 
-                    match CartStorage.get anonymousID with
-                    | Some cart -> cart
-                    | None -> CartStorage.create anonymousID ShoppingCart.Empty
+                  let shoppingCart = CartStorage.getOrCreate anonymousID                  
                                                                                             
                   let shoppingCartController = new ShoppingCartController(shoppingCart, CartStorage.update anonymousID)
                   shoppingCartController :> IHttpController

@@ -1,0 +1,33 @@
+﻿@using PhoneCat.Domain
+@model IEnumerable<PhoneCat.Domain.Production.Phone>
+
+
+<h2>Your Shopping Cart</h2>
+
+@if (Model.Count() == 0)
+{
+    <p>There is no item in the cart</p>
+}
+else
+{
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    foreach (var phone in Model)
+    {
+        <hr />
+        <div>
+            <h4><a href='@Url.Action("Show", "Phone", new {id = phone.Id})'>@phone.Name</a></h4>
+            <img src="http://angular.github.io/angular-phonecat/step-12/app/@phone.ImageUrl" width="100" height="100"/>
+        </div>
+    }
+    <hr/>
+    <p style="float:right">
+        <span>Your shopping cart contains @Model.Count() items(s)</span>
+        <a class="btn btn-info" href="@Url.Action("Checkout", "Order")" id="checkout">
+            <i class="fa fa-shopping-cart fa-lg"></i> Checkout
+        </a>
+    </p> 
+
+}
+

@@ -12,3 +12,8 @@ module ShoppingCart =
     match cart with
     | Empty -> Active [productId]
     | Active items -> Active (productId :: items)
+
+  let getItems cart =
+    match cart with
+    | Empty -> Seq.empty
+    | Active items -> items |> List.toSeq

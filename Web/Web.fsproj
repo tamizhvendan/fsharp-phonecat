@@ -146,12 +146,16 @@
     <Compile Include="Controllers\ManufacturerController.fs" />
     <Compile Include="Controllers\AuthenticationController.fs" />
     <Compile Include="Controllers\ShoppingCartController.fs" />
+    <Compile Include="Controllers\CheckoutController.fs" />
+    <Compile Include="Controllers\OrderController.fs" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Phone\Show.cshtml" />
     <Content Include="Views\Phone\Search.cshtml" />
     <Content Include="Views\Manufacturer\Show.cshtml" />
     <Content Include="Views\Authentication\Login.cshtml" />
     <Content Include="Views\Authentication\Register.cshtml" />
+    <Content Include="Views\Checkout\ViewCart.cshtml" />
+    <Content Include="Views\Order\Checkout.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -167,6 +171,7 @@
     </Compile>
     <Content Include="packages.config" />
     <Compile Include="Startup.fs" />
+    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Identity\Identity.fsproj">

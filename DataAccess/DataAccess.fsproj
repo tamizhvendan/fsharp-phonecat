@@ -55,6 +55,7 @@
     <Content Include="app.config" />
     <Compile Include="InMemoryInventory.fs" />
     <Compile Include="CartStorage.fs" />
+    <Compile Include="OrderStorage.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">

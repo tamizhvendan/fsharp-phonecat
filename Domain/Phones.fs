@@ -17,6 +17,11 @@ module Phones =
   let getPhoneById (phones : seq<Phone>) phoneId =
     phones |> Seq.find (fun p -> p.Id = phoneId)
 
+  let contains x = Seq.exists ((=) x)
+
+  let getPhonesByIds (phones : seq<Phone>) phoneIds =  
+    phones |> Seq.filter (fun p -> contains p.Id phoneIds)
+
   let getPhonesOfManufacturer (phones : seq<Phone>) (manufacturerName) =
     let phones' = 
       phones

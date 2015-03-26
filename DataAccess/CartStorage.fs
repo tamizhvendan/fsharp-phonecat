@@ -1,8 +1,9 @@
 ﻿namespace PhoneCat.DataAccess
 open PhoneCat.Domain.ShoppingCart
 open System.Collections.Generic
+open PhoneCat.Domain
 
-module CartStorage =  
+module CartStorage =    
   
   let private inMemoryStorage = 
     new Dictionary<string, Cart>()
@@ -19,3 +20,8 @@ module CartStorage =
     match inMemoryStorage.ContainsKey(anonymousId) with
     | true -> Some inMemoryStorage.[anonymousId] 
     | _ -> None
+    
+  let getOrCreate anonymousId =
+    match get anonymousId with
+    | Some cart -> cart
+    | None -> create anonymousId ShoppingCart.Empty

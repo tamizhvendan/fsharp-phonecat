@@ -62,6 +62,7 @@
     <Compile Include="SearchParser.fs" />
     <Content Include="packages.config" />
     <Compile Include="ShoppingCart.fs" />
+    <Compile Include="Orders.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FParsec">

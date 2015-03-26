@@ -14,6 +14,7 @@ open System.Web.Helpers.Claims
 type LoginViewModel = {
   Email : string
   Password : string
+  ReturnUrl : string
 }
 
 [<CLIMutable>]
@@ -36,7 +37,8 @@ type AuthenticationController (userManager : UserManager<User>) =
     let user = userManager.Find(email, password)
     if user <> null then Some user else None
 
-  member this.Login() = this.View()
+  member this.Login(returnUrl : string) =     
+    this.View({Email = ""; Password= ""; ReturnUrl = returnUrl})
     
   [<HttpPost>]
   [<ValidateAntiForgeryToken>]
@@ -47,7 +49,10 @@ type AuthenticationController (userManager : UserManager<User>) =
       this.View(loginViewModel) :> ActionResult
     | Some user ->
       signin userManager base.Request user
-      this.RedirectToAction("Index", "Home") :> ActionResult       
+      if System.String.IsNullOrEmpty(loginViewModel.ReturnUrl) then
+        this.RedirectToAction("Index", "Home") :> ActionResult       
+      else
+        this.Redirect(loginViewModel.ReturnUrl) :> ActionResult
 
   member this.Logout() =
     let authManager = base.Request.GetOwinContext().Authentication
